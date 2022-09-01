@@ -27,7 +27,15 @@ export default defineComponent({
 		return {
 			email: '',
 			password: '',
+			username: '',
 		};
+	},
+
+	mounted() {
+		const cookie = this.$cookies.get('token');
+		this.username = cookie.username;
+
+		if (cookie.username) console.log('MOVING TO MAIN SITE PAGE');
 	},
 
 	computed: {
@@ -36,9 +44,15 @@ export default defineComponent({
 
 	methods: {
 		async login() {
-			console.log('Pressed login button');
-			const req = await signin(this.email, this.password);
-			console.log(req);
+			try {
+				const req = await signin(this.email, this.password);
+
+				if (req.status !== 200) return console.log('ERROROROR');
+
+				this.$cookies.set('token', JSON.stringify(req.data), '7d');
+			} catch (error) {
+				console.log(error);
+			}
 		},
 	},
 });

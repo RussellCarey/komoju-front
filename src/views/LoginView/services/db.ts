@@ -13,6 +13,7 @@ export const signin = async (email: string, password: string) => {
 	return req;
 };
 
+// FROM OLD PROJECT
 // export const getPaymentIntent = async (userDetails: Object) => {
 // 	const paymentIntent = await axios.request({
 // 		withCredentials: true,
