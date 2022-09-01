@@ -37,7 +37,7 @@ export default defineComponent({
 	mounted() {
 		const cookie = this.$cookies.get('token');
 		this.username = cookie.username;
-		if (cookie.username) console.log('MOVING TO MAIN SITE PAGE');
+		if (cookie.username) this.$router.push('/store');
 	},
 
 	computed: {
