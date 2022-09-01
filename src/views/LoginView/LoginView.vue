@@ -18,6 +18,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { signin } from './services/db';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 export default defineComponent({
 	name: 'login_view',
@@ -34,7 +37,6 @@ export default defineComponent({
 	mounted() {
 		const cookie = this.$cookies.get('token');
 		this.username = cookie.username;
-
 		if (cookie.username) console.log('MOVING TO MAIN SITE PAGE');
 	},
 
@@ -44,15 +46,10 @@ export default defineComponent({
 
 	methods: {
 		async login() {
-			try {
-				const req = await signin(this.email, this.password);
-
-				if (req.status !== 200) return console.log('ERROROROR');
-
-				this.$cookies.set('token', JSON.stringify(req.data), '7d');
-			} catch (error) {
-				console.log(error);
-			}
+			const req = await signin(this.email, this.password);
+			if (req.status !== 200) return toast.error('Error logging in!');
+			this.$cookies.set('token', JSON.stringify(req.data), '7d');
+			toast.success('Sign in successful');
 		},
 	},
 });

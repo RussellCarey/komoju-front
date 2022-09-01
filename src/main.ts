@@ -4,5 +4,11 @@ import router from './router';
 import store from './store';
 
 import VueCookies from 'vue-cookies';
+import Toast, { PluginOptions } from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
 
-createApp(App).use(store).use(router).use(VueCookies).mount('#app');
+const toastOptions: PluginOptions = {
+	// You can set your default options here
+};
+
+createApp(App).use(store).use(router).use(VueCookies).use(Toast, toastOptions).mount('#app');
