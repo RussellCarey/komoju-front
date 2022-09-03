@@ -22,6 +22,7 @@ import { useToast } from 'vue-toastification';
 
 const toast = useToast();
 
+// DONT USE OPTIOSN API !!!!!
 export default defineComponent({
 	name: 'login_view',
 	props: [],
@@ -48,8 +49,8 @@ export default defineComponent({
 		async login() {
 			const req = await signin(this.email, this.password);
 			if (req.status !== 200) return toast.error('Error logging in!');
+
 			this.$cookies.set('token', JSON.stringify(req.data), '7d');
-			toast.success('Sign in successful');
 		},
 	},
 });

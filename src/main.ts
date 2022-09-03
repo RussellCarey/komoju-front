@@ -1,7 +1,9 @@
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+
 import App from './App.vue';
+const pinia = createPinia();
 import router from './router';
-import store from './store';
 
 import VueCookies from 'vue-cookies';
 import Toast, { PluginOptions } from 'vue-toastification';
@@ -11,4 +13,4 @@ const toastOptions: PluginOptions = {
 	// You can set your default options here
 };
 
-createApp(App).use(store).use(router).use(VueCookies).use(Toast, toastOptions).mount('#app');
+createApp(App).use(pinia).use(router).use(VueCookies).use(Toast, toastOptions).mount('#app');

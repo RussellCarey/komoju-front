@@ -13,6 +13,7 @@ const routes: Array<RouteRecordRaw> = [
 		name: 'home',
 		component: LoginView,
 	},
+	{ path: '/:pathMatch(.*)*', component: LoginView },
 ];
 
 const router = createRouter({
