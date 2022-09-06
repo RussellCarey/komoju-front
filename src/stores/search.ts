@@ -1,9 +1,6 @@
 import { defineStore } from 'pinia';
 
-interface Test {
-	name: string;
-}
-
+// Dont really need global for this?
 export const useSearchStore = defineStore('searchStore', {
 	state: () => ({
 		genres: [] as string[],
@@ -11,18 +8,18 @@ export const useSearchStore = defineStore('searchStore', {
 		tags: [] as string[],
 	}),
 	getters: {
-		genres: (state) => state.genres,
-		platforms: (state) => state.platforms,
-		tags: (state) => state.tags,
+		get_genres: (state) => state.genres,
+		get_platforms: (state) => state.platforms,
+		get_tags: (state) => state.tags,
 	},
 	actions: {
-		addGenre(g: string) {
+		add_genre(g: string) {
 			this.genres.push(g);
 		},
-		addPlatform(g: string) {
+		add_platforms(g: string) {
 			this.platforms.push(g);
 		},
-		addTags(g: string) {
+		add_tags(g: string) {
 			this.tags.push(g);
 		},
 	},

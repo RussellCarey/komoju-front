@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+
 import LoginView from '../views/LoginView/LoginView.vue';
+import StoreView from '../views/StorePage/StoreView.vue';
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -10,8 +11,8 @@ const routes: Array<RouteRecordRaw> = [
 	},
 	{
 		path: '/store',
-		name: 'home',
-		component: LoginView,
+		name: 'store',
+		component: StoreView,
 	},
 	{ path: '/:pathMatch(.*)*', component: LoginView },
 ];

@@ -16,9 +16,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { signin } from './services/db';
+import { defineComponent, ref } from 'vue';
+import { useCookies } from '@vueuse/integrations/useCookies';
 import { useToast } from 'vue-toastification';
+import { signin } from './services/db';
+
+import { useUserStore } from '@/stores/user';
 
 const toast = useToast();
 
@@ -27,31 +30,34 @@ export default defineComponent({
 	name: 'login_view',
 	props: [],
 
-	data() {
-		return {
-			email: '',
-			password: '',
-			username: '',
+	setup() {
+		const cookies = useCookies(['locale']);
+		const store = useUserStore();
+		const email = ref('');
+		const password = ref('');
+		const username = ref('');
+
+		const login = async () => {
+			const req = await signin(email.value, password.value);
+
+			if (req.status !== 200) return toast.error('Error logging in!');
+
+			// Set cookie
+			cookies.set('token', JSON.stringify(req.data.token));
+
+			// Set user global state..
+			store.set_auth_token(req.data.token);
+			store.set_details(req.data.user);
+			store.set_tokens(req.data.user.token_count);
 		};
+
+		// We can now use these in the template..
+		return { store, email, password, username, login, cookies };
 	},
 
 	mounted() {
-		const cookie = this.$cookies.get('token');
-		this.username = cookie.username;
-		if (cookie.username) this.$router.push('/store');
-	},
-
-	computed: {
-		// Computed variables go here
-	},
-
-	methods: {
-		async login() {
-			const req = await signin(this.email, this.password);
-			if (req.status !== 200) return toast.error('Error logging in!');
-
-			this.$cookies.set('token', JSON.stringify(req.data), '7d');
-		},
+		this.username = this.cookies.get('token');
+		if (this.username) this.$router.push('/store');
 	},
 });
 </script>
