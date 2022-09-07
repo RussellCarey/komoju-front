@@ -1,11 +1,18 @@
 .card-container {
 	width: 200px;
 	height: 200px;
+
 	min-height: 200px;
+	min-width: 200px;
 
 	display: flex;
 	flex-direction: column;
 	justify-content: end;
+
+	background-size: cover;
+	background-position: center;
+
+	margin: 5px;
 }
 
 .info-card {
@@ -13,7 +20,7 @@
 	height: 70px;
 	padding: 10px;
 
-	backdrop-filter: blur(10px);
+	backdrop-filter: blur(3px);
 
 	display: flex;
 	flex-direction: column;

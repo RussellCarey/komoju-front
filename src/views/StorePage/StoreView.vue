@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="content">
 			<div class="header">
-				<h5 class="header-results">1,345 results</h5>
+				<h3 class="header-results">1,345 results</h3>
 				<div class="header-items">
 					<input type="text" class="header-items-search" />
 					<!-- Basket Icon-->
@@ -13,12 +13,27 @@
 			</div>
 
 			<div class="main">
-				<div class="filter-area">
-					<!-- Filter genre, platform etc-->
+				<div class="sidebar">
+					<div class="filter-area">
+						<h4>Categories</h4>
+						<CategoryItem class="filter-area-items" v-for="cats in categoryData?.data?.results" :key="cats.id" :name="cats.name" />
+					</div>
+
+					<div class="filter-area">
+						<h4>Platforms</h4>
+						<PlatformItem class="filter-area-items" v-for="plats in platformData?.data?.results" :key="plats.id" :name="plats.name" />
+					</div>
 				</div>
 
 				<div class="games">
-					<GameCard :rating="4.5" :title="'Fortnite'" :image="'https://picsum.photos/200/300'" :price="4500" />
+					<GameCard
+						v-for="games in gameData?.data?.results"
+						:key="games.id"
+						:rating="4.5"
+						:title="games.name"
+						:image="games.background_image"
+						:price="Math.floor(games.rating * 1000)"
+					/>
 				</div>
 			</div>
 		</div>
@@ -29,34 +44,44 @@
 import { defineComponent } from "vue"
 import { useToast } from "vue-toastification"
 import { useSearchStore } from "@/stores/search"
+import { get_all_games, get_all_categories, get_all_platforms } from "./services/rawr"
 
-import CartModal from "@/components/store/CartModal/CartModal.vue"
+import CategoryItem from "./components/CategoryItem/CategoryItem.vue"
 import GameCard from "./components/GameCard/GameCard.vue"
 
+import { rawrResponse } from "../../interfaces/rawr"
+import PlatformItem from "./components/PlatformItem/PlatformItem.vue"
 const toast = useToast()
 
-// DONT USE OPTIOSN API !!!!!
 export default defineComponent({
 	name: "store_view",
 	components: {
 		GameCard,
+		CategoryItem,
+		PlatformItem,
 	},
 
 	setup() {
 		const store = useSearchStore()
+		const gameData = {} as rawrResponse
+		const categoryData = {} as rawrResponse
+		const platformData = {} as rawrResponse
 
 		return {
-			searchTerms: {
-				genre: [] as string[],
-				platforms: [] as string[],
-				tags: [] as string[],
-			},
 			store,
+			gameData,
+			categoryData,
+			platformData,
 		}
 	},
 
-	mounted() {
-		//
+	async mounted() {
+		this.gameData = await get_all_games()
+		this.categoryData = await get_all_categories()
+		this.platformData = await get_all_platforms()
+		console.log(this.gameData)
+		console.log(this.categoryData)
+		console.log(this.platformData)
 	},
 })
 </script>
