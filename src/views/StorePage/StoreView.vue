@@ -1,15 +1,17 @@
 <template>
 	<div class="container">
+		<PaymentModal v-if="showPaymentModal" @closeModal="togglePaymentModal" />
+
 		<div class="content">
 			<div class="header">
 				<h3 class="header-results">{{ gameData?.data?.count.toLocaleString() || 0 }} results</h3>
 				<div class="header-items">
-					<input type="text" class="header-items-search" :value="store.get_search" @input="(e) => setSearchValue(e)" />
+					<input type="text" class="header-items-search" :value="searchStore.get_search" @input="(e) => setSearchValue(e)" />
 					<p>Cart</p>
-					<p class="header-items-add-tokens">Add tokens</p>
+					<p @click="togglePaymentModal">Add tokens</p>
 					<p>Account</p>
 					<p>Favourites</p>
-					<p>Tokens: 1000</p>
+					<p>Tokens: {{ userStore.get_tokens }}</p>
 				</div>
 			</div>
 			<div class="main">
@@ -58,34 +60,43 @@
 import { watch, ref, onMounted } from "vue"
 import { useToast } from "vue-toastification"
 import { useSearchStore } from "@/stores/search"
+import { useUserStore } from "@/stores/user"
 import { get_games, get_all_categories, get_all_platforms } from "./services/rawr"
 
 import FilterItem from "./components/FilterItem/FilterItem.vue"
 import GameCard from "./components/GameCard/GameCard.vue"
+import PaymentModal from "./components/PaymentModal/PaymentModal.vue"
 
 import { rawrResponse } from "../../interfaces/rawr"
 const toast = useToast()
 
-const store = useSearchStore()
+const searchStore = useSearchStore()
+const userStore = useUserStore()
 const gameData = ref<rawrResponse | null>()
 const genreData = ref<rawrResponse | null>()
 const platformData = ref<rawrResponse | null>()
+const showPaymentModal = ref(false)
 
 const setSearchValue = (e: Event) => {
 	const target = e.target as HTMLInputElement
-	store.edit_search(target?.value)
+	searchStore.edit_search(target?.value)
+}
+
+const togglePaymentModal = () => {
+	showPaymentModal.value = !showPaymentModal.value
+	console.log(showPaymentModal.value)
 }
 
 onMounted(async () => {
-	gameData.value = await get_games(store.url)
+	gameData.value = await get_games(searchStore.url)
 	genreData.value = await get_all_categories()
 	platformData.value = await get_all_platforms()
 })
 
 watch(
-	() => store.url,
+	() => searchStore.url,
 	async () => {
-		gameData.value = await get_games(store.url)
+		gameData.value = await get_games(searchStore.url)
 	}
 )
 </script>
