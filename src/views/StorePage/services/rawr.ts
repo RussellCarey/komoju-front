@@ -6,13 +6,14 @@ const category_url = `https://rawg.io/api/genres`
 const platform_url = `https://rawg.io/api/platforms`
 const key = `key=f0411c841de74da1818f464ffe5c0aa5`
 
-export const get_all_games = async () => {
+export const get_games = async (url: string) => {
 	try {
 		const req = await axios.request({
 			method: "GET",
-			url: `${game_url}?${key}`,
+			url: url,
 		})
 
+		console.log(req)
 		return req
 	} catch (error: any) {
 		return error.response

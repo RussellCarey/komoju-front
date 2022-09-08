@@ -2,26 +2,40 @@
 	<div class="container">
 		<div class="content">
 			<div class="header">
-				<h3 class="header-results">1,345 results</h3>
+				<h3 class="header-results">{{ gameData?.data?.count.toLocaleString() || 0 }} results</h3>
 				<div class="header-items">
-					<input type="text" class="header-items-search" />
-					<!-- Basket Icon-->
+					<input type="text" class="header-items-search" :value="store.get_search" @input="(e) => setSearchValue(e)" />
+					<p>Cart</p>
 					<p class="header-items-add-tokens">Add tokens</p>
-					<!-- User Icon-->
-					<!-- Favourites Icon-->
+					<p>Account</p>
+					<p>Favourites</p>
+					<p>Tokens: 1000</p>
 				</div>
 			</div>
-
 			<div class="main">
 				<div class="sidebar">
 					<div class="filter-area">
 						<h4>Categories</h4>
-						<CategoryItem class="filter-area-items" v-for="cats in categoryData?.data?.results" :key="cats.id" :name="cats.name" />
+						<FilterItem
+							class="filter-area-items"
+							v-for="gen in genreData?.data?.results"
+							:key="gen.id"
+							:item="gen.name"
+							:id="gen.id"
+							:type="'genre'"
+						/>
 					</div>
 
 					<div class="filter-area">
 						<h4>Platforms</h4>
-						<PlatformItem class="filter-area-items" v-for="plats in platformData?.data?.results" :key="plats.id" :name="plats.name" />
+						<FilterItem
+							class="filter-area-items"
+							v-for="plats in platformData?.data?.results"
+							:key="plats.id"
+							:item="plats.name"
+							:id="plats.id"
+							:type="'platform'"
+						/>
 					</div>
 				</div>
 
@@ -40,50 +54,40 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
+<script setup lang="ts">
+import { watch, ref, onMounted } from "vue"
 import { useToast } from "vue-toastification"
 import { useSearchStore } from "@/stores/search"
-import { get_all_games, get_all_categories, get_all_platforms } from "./services/rawr"
+import { get_games, get_all_categories, get_all_platforms } from "./services/rawr"
 
-import CategoryItem from "./components/CategoryItem/CategoryItem.vue"
+import FilterItem from "./components/FilterItem/FilterItem.vue"
 import GameCard from "./components/GameCard/GameCard.vue"
 
 import { rawrResponse } from "../../interfaces/rawr"
-import PlatformItem from "./components/PlatformItem/PlatformItem.vue"
 const toast = useToast()
 
-export default defineComponent({
-	name: "store_view",
-	components: {
-		GameCard,
-		CategoryItem,
-		PlatformItem,
-	},
+const store = useSearchStore()
+const gameData = ref<rawrResponse | null>()
+const genreData = ref<rawrResponse | null>()
+const platformData = ref<rawrResponse | null>()
 
-	setup() {
-		const store = useSearchStore()
-		const gameData = {} as rawrResponse
-		const categoryData = {} as rawrResponse
-		const platformData = {} as rawrResponse
+const setSearchValue = (e: Event) => {
+	const target = e.target as HTMLInputElement
+	store.edit_search(target?.value)
+}
 
-		return {
-			store,
-			gameData,
-			categoryData,
-			platformData,
-		}
-	},
-
-	async mounted() {
-		this.gameData = await get_all_games()
-		this.categoryData = await get_all_categories()
-		this.platformData = await get_all_platforms()
-		console.log(this.gameData)
-		console.log(this.categoryData)
-		console.log(this.platformData)
-	},
+onMounted(async () => {
+	gameData.value = await get_games(store.url)
+	genreData.value = await get_all_categories()
+	platformData.value = await get_all_platforms()
 })
+
+watch(
+	() => store.url,
+	async () => {
+		gameData.value = await get_games(store.url)
+	}
+)
 </script>
 
 <style lang="scss" scoped>
