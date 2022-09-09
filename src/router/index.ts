@@ -27,11 +27,16 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
+	console.log("RUNNING ROUTER")
 	const userStore = useUserStore()
 	const cookies = useCookies(["locale"])
 
 	if (to.path !== "/") {
+		// No token? Not logged in
 		if (!cookies.get("token")) next({ name: "home" })
+
+		// IF we have data, we dont need it again!
+		if (userStore.tokens && userStore.details) next()
 
 		const userData = await getUserDetails(cookies.get("token"))
 		if (userData.status !== 200) next({ name: "home" })

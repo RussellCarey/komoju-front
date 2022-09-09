@@ -7,10 +7,19 @@
 				<h3 class="header-results">{{ gameData?.data?.count.toLocaleString() || 0 }} results</h3>
 				<div class="header-items">
 					<input type="text" class="header-items-search" :value="searchStore.get_search" @input="(e) => setSearchValue(e)" />
-					<p>Cart</p>
+
+					<div class="cart">
+						<p @click="toggleCartModal">Cart</p>
+						<Modal v-if="showCartModal" :isFavourites="false" />
+					</div>
+
 					<p @click="togglePaymentModal">Add tokens</p>
-					<p>Account</p>
-					<p>Favourites</p>
+
+					<div class="favourites">
+						<p @click="toggleFavouritesModal">Favourites</p>
+						<Modal v-if="showFavouriteModal" :isFavourites="true" />
+					</div>
+
 					<p>Tokens: {{ userStore.get_tokens }}</p>
 				</div>
 			</div>
@@ -44,8 +53,9 @@
 				<div class="games">
 					<GameCard
 						v-for="games in gameData?.data?.results"
+						:id="games.id"
 						:key="games.id"
-						:rating="4.5"
+						:rating="games.rating"
 						:title="games.name"
 						:image="games.background_image"
 						:price="Math.floor(games.rating * 1000)"
@@ -66,6 +76,7 @@ import { get_games, get_all_categories, get_all_platforms } from "./services/raw
 import FilterItem from "./components/FilterItem/FilterItem.vue"
 import GameCard from "./components/GameCard/GameCard.vue"
 import PaymentModal from "./components/PaymentModal/PaymentModal.vue"
+import Modal from "./components/Modal/ModalComponent.vue"
 
 import { rawrResponse } from "../../interfaces/rawr"
 const toast = useToast()
@@ -76,6 +87,8 @@ const gameData = ref<rawrResponse | null>()
 const genreData = ref<rawrResponse | null>()
 const platformData = ref<rawrResponse | null>()
 const showPaymentModal = ref(false)
+const showCartModal = ref(false)
+const showFavouriteModal = ref(false)
 
 const setSearchValue = (e: Event) => {
 	const target = e.target as HTMLInputElement
@@ -84,7 +97,14 @@ const setSearchValue = (e: Event) => {
 
 const togglePaymentModal = () => {
 	showPaymentModal.value = !showPaymentModal.value
-	console.log(showPaymentModal.value)
+}
+
+const toggleCartModal = () => {
+	showCartModal.value = !showCartModal.value
+}
+
+const toggleFavouritesModal = () => {
+	showFavouriteModal.value = !showFavouriteModal.value
 }
 
 onMounted(async () => {
@@ -93,6 +113,7 @@ onMounted(async () => {
 	platformData.value = await get_all_platforms()
 })
 
+// Set a time so its not so fast?
 watch(
 	() => searchStore.url,
 	async () => {

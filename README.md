@@ -1,7 +1,8 @@
 # Tokeny - Front
 
 This read me, app and images below are in progress...  
-The front end for my Rails / Vue game purchasing mini project.
+The front end for my Rails / Vue game purchasing mini project.  
+THe main focus of this project was the functionality over design.  
 You can find the back end here: https://github.com/RussellCarey/komoju-back
 
 ![alt text](https://github.com/RussellCarey/komoju-front/raw/master/design/ss1.png)

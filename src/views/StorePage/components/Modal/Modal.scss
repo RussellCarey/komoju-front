@@ -1,0 +1,43 @@
+// <div class="modal-container">
+// 	<div class="modal-container-items">
+// 		<div class="modal-container-items-item">
+
+.modal-container {
+	z-index: 20;
+	position: absolute;
+	top: 90%;
+	right: 0px;
+
+	width: 300px;
+	height: max-content;
+	padding: 20px 20px;
+
+	background-color: white;
+	color: black;
+	border-radius: 5px;
+
+	&-items {
+		width: 100%;
+
+		&-item {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+
+			&-image {
+			}
+
+			&-name {
+				display: inline-block;
+			}
+
+			&-price {
+				display: inline-block;
+			}
+		}
+
+		&-item:not(:last-child) {
+			margin-bottom: 10px;
+		}
+	}
+}

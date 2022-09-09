@@ -13,7 +13,6 @@ export const get_games = async (url: string) => {
 			url: url,
 		})
 
-		console.log(req)
 		return req
 	} catch (error: any) {
 		return error.response
