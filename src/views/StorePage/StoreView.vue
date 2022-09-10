@@ -13,7 +13,7 @@
 						<Modal v-if="showCartModal" :isFavourites="false" />
 					</div>
 
-					<p @click="togglePaymentModal">Add tokens</p>
+					<p class="add-tokens" @click="togglePaymentModal">Add tokens</p>
 
 					<div class="favourites">
 						<p @click="toggleFavouritesModal">Favourites</p>

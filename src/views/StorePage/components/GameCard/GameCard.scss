@@ -24,7 +24,9 @@
 		height: 20px;
 
 		background-color: rgb(189, 32, 32);
-		mask: url("../../../../assets//svg//heart-solid.svg") no-repeat center;
+		mask: url("../../../../assets//svg/heart-solid.svg") no-repeat center;
+
+		cursor: pointer;
 	}
 
 	&-hearted {
@@ -39,6 +41,7 @@
 		background-color: black;
 		color: white;
 		font-weight: bold;
+		cursor: pointer;
 	}
 }
 

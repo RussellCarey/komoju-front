@@ -1,9 +1,12 @@
-import { defineStore } from 'pinia';
-import { User } from '@/interfaces/user';
+import { defineStore } from "pinia"
+import { User } from "@/interfaces/user"
 
-export const useUserStore = defineStore('userStore', {
+//! Create a customer on KOMOJU and save payment info to it...
+//! WHen the user has this, we can pass the customer as cutomer: in the payment api..
+// https://docs.komoju.com/en/api/overview/#tokens
+export const useUserStore = defineStore("userStore", {
 	state: () => ({
-		auth_token: '' as string,
+		auth_token: "" as string,
 		tokens: 0 as number,
 		details: {} as User,
 		cart: {},
@@ -18,21 +21,21 @@ export const useUserStore = defineStore('userStore', {
 	},
 	actions: {
 		set_auth_token(auth_token: string) {
-			this.auth_token = auth_token;
+			this.auth_token = auth_token
 		},
 		set_tokens(tokens: number) {
-			this.tokens = tokens;
+			this.tokens = tokens
 		},
 		set_details(details: User) {
-			this.details = details;
+			this.details = details
 		},
 		set_cart(cart: any) {
-			this.cart = cart;
+			this.cart = cart
 		},
 		set_favourites(favourites: any) {
-			this.favourites = favourites;
+			this.favourites = favourites
 		},
 	},
-});
+})
 
 // tokens: number, details: any, cart: any, favourites: any)

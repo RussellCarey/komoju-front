@@ -37,7 +37,7 @@ const login = async () => {
 	if (req.status !== 200) return toast.error("Error logging in!")
 
 	// Set cookie
-	cookies.set("token", JSON.stringify(req.data.token))
+	cookies.set("token", req.data.token)
 
 	// Set user global state..
 	store.set_auth_token(req.data.token)

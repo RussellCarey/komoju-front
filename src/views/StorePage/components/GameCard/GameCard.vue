@@ -16,8 +16,10 @@ import { defineProps } from "vue"
 import { addFavourite, addCartItem } from "./services/services"
 import { useCookies } from "@vueuse/integrations/useCookies"
 import { FavouriteData } from "./interfaces/interfaces"
+import { useToast } from "vue-toastification"
 
 const cookies = useCookies(["locale"])
+const toast = useToast()
 
 const props = defineProps({
 	id: Number,
@@ -36,12 +38,16 @@ const gameData: FavouriteData = {
 
 const addGameToFavourites = async () => {
 	const req = await addFavourite(cookies.get("token"), gameData)
-	console.log(req)
+	if (req.status !== 200) return toast.error("Could not add to favourites")
+
+	toast.success("Added to favourites.")
 }
 
 const addGameToCart = async () => {
 	const req = await addCartItem(cookies.get("token"), gameData)
-	console.log(req)
+	if (req.status !== 200) return toast.error("Could not add to cart")
+
+	toast.success("Added to cart.")
 }
 </script>
 

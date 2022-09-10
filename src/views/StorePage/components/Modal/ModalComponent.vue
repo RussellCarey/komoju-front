@@ -2,10 +2,10 @@
 	<div class="modal-container">
 		<div class="modal-container-items">
 			<div v-for="item in items" :key="item.id" class="modal-container-items-item">
-				<img src="" alt="" class="modal-container-items-item-image" />
+				<img :src="item.image" alt="" class="modal-container-items-item-image" />
 				<p class="modal-container-items-item-name">{{ item.name }}</p>
 				<p class="modal-container-items-item-price">{{ item.price }}</p>
-				<p @click="(e) => removeItem(item.id, item.name)">X</p>
+				<div class="modal-container-items-item-delete" @click="(e) => removeItem(item.id, item.name)"></div>
 			</div>
 			<p v-if="items.length < 1">No items in</p>
 			<button v-if="!isFavourites">Purchase</button>
@@ -33,16 +33,16 @@ const props = defineProps({
 
 const removeItem = async (id: number, name: string) => {
 	const req = props.isFavourites ? await removeFavourite(cookies.get("token"), id) : await removeCartItem(cookies.get("token"), id)
-	if (req.status !== 200) return toast.error(`Error getting ${props.isFavourites ? "favourite" : "cart"} items`)
+	if (req.status !== 200) return toast.error(`Error deleting ${props.isFavourites ? "favourite" : "cart"} items`)
 
 	items.value = req.data.data
-
 	toast.success(`Removed ${name}`)
 }
 
 onMounted(async () => {
 	const req = props.isFavourites ? await getCurrentFavourites(cookies.get("token")) : await getCurrentCart(cookies.get("token"))
-	console.log(req)
+	if (req.status !== 200) return toast.error(`Error getting ${props.isFavourites ? "favourite" : "cart"} items`)
+
 	items.value = req.data.data
 })
 </script>
