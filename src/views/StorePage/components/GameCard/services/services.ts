@@ -5,7 +5,7 @@ export const addFavourite = async (token: string, favouriteData: FavouriteData) 
 	try {
 		const req = await axios.request({
 			method: "POST",
-			url: "http://localhost:3000/favourites",
+			url: `${process.env.VUE_APP_ROOT_RAILS_URL}/favourites`,
 			data: {
 				game_id: favouriteData.name,
 				image: favouriteData.image,
@@ -28,7 +28,7 @@ export const addCartItem = async (token: string, favouriteData: FavouriteData) =
 	try {
 		const req = await axios.request({
 			method: "POST",
-			url: "http://localhost:3000/cart",
+			url: `${process.env.VUE_APP_ROOT_RAILS_URL}/cart`,
 			data: {
 				game_id: favouriteData.name,
 				image: favouriteData.image,

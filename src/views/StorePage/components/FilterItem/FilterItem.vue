@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { defineProps, ref } from "vue"
-import { useSearchStore } from "@/stores/search"
+import { useSearchStore } from "../../../../stores/search"
 
 const store = useSearchStore()
 let isSelected = ref(false)

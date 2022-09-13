@@ -32,12 +32,10 @@ export const getPaymentToken = async (data: PaymentData) => {
 }
 
 export const submitPaymentCard = async (amount: number, payment_details: string, token: string, save_details = false) => {
-	console.log("PAyment details")
-	console.log(payment_details)
 	try {
 		const req = await axios.request({
 			method: "POST",
-			url: "http://localhost:3000/make_payment",
+			url: `${process.env.VUE_APP_ROOT_RAILS_URL}/make_payment`,
 			data: {
 				amount,
 				currency: "JPY",
@@ -61,7 +59,7 @@ export const submitPaymentCustomer = async (amount: number, customer: string, to
 	try {
 		const req = await axios.request({
 			method: "POST",
-			url: "http://localhost:3000/make_payment",
+			url: `${process.env.VUE_APP_ROOT_RAILS_URL}/make_payment`,
 			data: {
 				amount,
 				currency: "JPY",
@@ -85,7 +83,7 @@ export const saveKomojuCustomer = async (email: string, payment_details: string,
 	try {
 		const req = await axios.request({
 			method: "POST",
-			url: "http://localhost:3000/customers",
+			url: `${process.env.VUE_APP_ROOT_RAILS_URL}/customers`,
 			data: {
 				email,
 				payment_details,

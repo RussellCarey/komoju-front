@@ -29,6 +29,7 @@ const props = defineProps({
 	rating: Number,
 })
 
+
 const gameData: FavouriteData = {
 	game_id: props.id!,
 	image: props.image!,

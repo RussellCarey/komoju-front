@@ -15,7 +15,7 @@
 			<p v-if="!userStore.details.komoju_customer" @click="toggleSavePayment">
 				{{ !savePaymentData ? "Save payment data?" : "Dont save payment data?" }}
 			</p>
-			<button @click="attemptPayment">Purchase</button>
+			<button @click="attemptPayment">{{ userStore.details.komoju_customer ? "One click payment" : "Purchase" }}</button>
 		</div>
 	</div>
 </template>
@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { ref, defineEmits } from "vue"
 import { PaymentData } from "./interfaces/PaymentModal"
-import { useUserStore } from "@/stores/user"
+import { useUserStore } from "../../../../stores/user"
 import { useCookies } from "@vueuse/integrations/useCookies"
 import { useToast } from "vue-toastification"
 import { getPaymentToken, submitPaymentCard, submitPaymentCustomer, saveKomojuCustomer } from "./services/services"

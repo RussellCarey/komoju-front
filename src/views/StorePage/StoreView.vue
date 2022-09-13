@@ -69,8 +69,8 @@
 <script setup lang="ts">
 import { watch, ref, onMounted } from "vue"
 import { useToast } from "vue-toastification"
-import { useSearchStore } from "@/stores/search"
-import { useUserStore } from "@/stores/user"
+import { useSearchStore } from "../../stores/search"
+import { useUserStore } from "../../stores/user"
 import { get_games, get_all_categories, get_all_platforms } from "./services/rawr"
 
 import FilterItem from "./components/FilterItem/FilterItem.vue"

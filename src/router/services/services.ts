@@ -4,7 +4,7 @@ export const getUserDetails = async (token: string) => {
 	try {
 		const req = await axios.request({
 			method: "GET",
-			url: "http://localhost:3000/users/details",
+			url: `${process.env.VUE_APP_ROOT_RAILS_URL}/users/details`,
 			headers: {
 				Authorization: token,
 			},

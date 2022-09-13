@@ -19,9 +19,9 @@
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import { useCookies } from "@vueuse/integrations/useCookies"
-import { useToast } from "vue-toastification"
 import { signin } from "./services/db"
-import { useUserStore } from "@/stores/user"
+import { useUserStore } from "../../stores/user"
+import { useToast } from "vue-toastification"
 
 const toast = useToast()
 const router = useRouter()
@@ -43,6 +43,8 @@ const login = async () => {
 	store.set_auth_token(req.data.token)
 	store.set_details(req.data.user)
 	store.set_tokens(req.data.user.token_count)
+
+	router.push("/store")
 }
 
 onMounted(async () => {
