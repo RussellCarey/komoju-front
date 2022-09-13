@@ -22,7 +22,7 @@ jobs:
         env:
           CI: false
 
-      # - run: pm2 delete tokeny-client
+      - run: pm2 delete tokeny-client
 
       - run: pm2 start npm --name "tokeny-client" -- run serve --spa
 
