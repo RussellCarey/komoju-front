@@ -27,7 +27,6 @@ jobs:
       - run: pm2 start npm --name "tokeny-client" -- run serve --spa
 
       - run: |
-          cd server
           touch .env
           echo VUE_APP_RAWR_KEY='${{ secrets.VUE_APP_RAWR_KEY }}' >> .env
           echo VUE_APP_ROOT_RAILS_URL='${{ secrets.VUE_APP_ROOT_RAILS_URL }}' >> .env
