@@ -20,7 +20,7 @@ export const getPaymentToken = async (data: PaymentData) => {
 			},
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Basic c2tfdGVzdF8zNGp2bWtrY3kwcmZweDMxbTZlNmNyZzc=`,
+				Authorization: `Basic ${process.env.VUE_APP_KOMOJU_SECRET}`,
 			},
 			withCredentials: true,
 		})
