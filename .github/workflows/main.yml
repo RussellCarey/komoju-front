@@ -31,6 +31,7 @@ jobs:
           echo VUE_APP_RAWR_KEY='${{ secrets.VUE_APP_RAWR_KEY }}' >> .env
           echo VUE_APP_ROOT_RAILS_URL='${{ secrets.VUE_APP_ROOT_RAILS_URL }}' >> .env
           echo VUE_APP_KOMOJU_SECRET='${{ secrets.VUE_APP_KOMOJU_SECRET }}' >> .env
+          echo VUE_APP_ROOT_RAILS_URL='${{ secrets.VUE_APP_ROOT_RAILS_URL }}' >> .env
           cat .env
 
       - run: |
