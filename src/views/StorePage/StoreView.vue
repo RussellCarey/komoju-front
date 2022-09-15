@@ -26,7 +26,7 @@
 			<div class="main">
 				<div class="main-sidebar">
 					<div class="main-sidebar-filter-area">
-						<h4>Categories</h4>
+						<h4 class="main-sidebar-filter-area-title">Categories</h4>
 						<FilterItem
 							class="main-sidebar-filter-area-items"
 							v-for="gen in genreData?.data?.results"
@@ -38,7 +38,7 @@
 					</div>
 
 					<div class="main-sidebar-filter-area">
-						<h4>Platforms</h4>
+						<h4 class="main-sidebar-filter-area-title">Platforms</h4>
 						<FilterItem
 							class="main-sidebar-filter-area-items"
 							v-for="plats in platformData?.data?.results"

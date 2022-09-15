@@ -16,18 +16,3 @@ export const signin = async (email: string, password: string) => {
 		return error.response
 	}
 }
-
-// FROM OLD PROJECT
-// export const getPaymentIntent = async (userDetails: Object) => {
-// 	const paymentIntent = await axios.request({
-// 		withCredentials: true,
-// 		method: 'POST',
-// 		url: !isDev() ? `${projectURLS.productionWithAPI}/payment/create-intent` : `${projectURLS.development}/api/payment/create-intent`,
-
-// 		data: {
-// 			userDetails,
-// 		},
-// 	});
-
-// 	return paymentIntent;
-// };

@@ -46,3 +46,13 @@ export const addCartItem = async (token: string, favouriteData: FavouriteData) =
 		return error.response
 	}
 }
+
+export const getYoutubeVideo = async (searchTerm: string) => {
+	try {
+		const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${searchTerm}&type=video&key=${process.env.VUE_APP_YOUTUBE_KEY}`
+		const req = await axios.get(url)
+		return req
+	} catch (error: any) {
+		return error.response
+	}
+}
