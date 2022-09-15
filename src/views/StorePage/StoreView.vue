@@ -3,19 +3,19 @@
 		<PaymentModal v-if="showPaymentModal" @closeModal="togglePaymentModal" />
 
 		<div class="content">
-			<div class="header">
-				<h3 class="header-results">{{ gameData?.data?.count.toLocaleString() || 0 }} results</h3>
-				<div class="header-items">
-					<input type="text" class="header-items-search" :value="searchStore.get_search" @input="(e) => setSearchValue(e)" />
+			<div class="content-header">
+				<h3 class="content-header-results">{{ gameData?.data?.count.toLocaleString() || 0 }} results</h3>
+				<div class="content-header-items">
+					<input type="text" class="content-header-items-search" :value="searchStore.get_search" @input="(e) => setSearchValue(e)" />
 
-					<div class="cart">
+					<div class="content-header-items-cart">
 						<p @click="toggleCartModal">Cart</p>
 						<Modal v-if="showCartModal" :isFavourites="false" />
 					</div>
 
-					<p class="add-tokens" @click="togglePaymentModal">Add tokens</p>
+					<p class="content-header-items-add-tokens" @click="togglePaymentModal">Add tokens</p>
 
-					<div class="favourites">
+					<div class="content-header-items-favourites">
 						<p @click="toggleFavouritesModal">Favourites</p>
 						<Modal v-if="showFavouriteModal" :isFavourites="true" />
 					</div>
@@ -24,11 +24,11 @@
 				</div>
 			</div>
 			<div class="main">
-				<div class="sidebar">
-					<div class="filter-area">
+				<div class="main-sidebar">
+					<div class="main-sidebar-filter-area">
 						<h4>Categories</h4>
 						<FilterItem
-							class="filter-area-items"
+							class="main-sidebar-filter-area-items"
 							v-for="gen in genreData?.data?.results"
 							:key="gen.id"
 							:item="gen.name"
@@ -37,10 +37,10 @@
 						/>
 					</div>
 
-					<div class="filter-area">
+					<div class="main-sidebar-filter-area">
 						<h4>Platforms</h4>
 						<FilterItem
-							class="filter-area-items"
+							class="main-sidebar-filter-area-items"
 							v-for="plats in platformData?.data?.results"
 							:key="plats.id"
 							:item="plats.name"
@@ -50,7 +50,7 @@
 					</div>
 				</div>
 
-				<div class="games">
+				<div class="main-sidebar-games">
 					<GameCard
 						v-for="games in gameData?.data?.results"
 						:id="games.id"
