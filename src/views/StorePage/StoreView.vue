@@ -59,6 +59,7 @@
 						:title="games.name"
 						:image="games.background_image"
 						:price="Math.floor(games.rating * 1000)"
+						:platforms="games.platforms"
 					/>
 				</div>
 			</div>
@@ -109,6 +110,7 @@ const toggleFavouritesModal = () => {
 
 onMounted(async () => {
 	gameData.value = await get_games(searchStore.url)
+	console.log(gameData)
 	genreData.value = await get_all_categories()
 	platformData.value = await get_all_platforms()
 })

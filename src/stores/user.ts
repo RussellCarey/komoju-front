@@ -33,6 +33,7 @@ export const useUserStore = defineStore("userStore", {
 			try {
 				const req = await Services.addFavourite(id, name, image, price)
 				if (req.status === 200) this.favourites = req.data.data
+				return req
 			} catch (error: any) {
 				return error.response
 			}
@@ -41,6 +42,7 @@ export const useUserStore = defineStore("userStore", {
 			try {
 				const req = await Services.getCurrentFavourites()
 				if (req.status === 200) this.favourites = req.data.data
+				return req
 			} catch (error: any) {
 				return error.response
 			}
@@ -49,6 +51,7 @@ export const useUserStore = defineStore("userStore", {
 			try {
 				const req = await Services.removeFavourite(id)
 				if (req.status === 200) this.favourites = req.data.data
+				return req
 			} catch (error: any) {
 				return error.response
 			}
@@ -57,6 +60,7 @@ export const useUserStore = defineStore("userStore", {
 			try {
 				const req = await Services.addCartItem(id, name, image, price)
 				if (req.status === 200) this.cart = req.data.data
+				return req
 			} catch (error: any) {
 				return error.response
 			}
@@ -65,6 +69,7 @@ export const useUserStore = defineStore("userStore", {
 			try {
 				const req = await Services.getCurrentCart()
 				if (req.status === 200) this.cart = req.data.data
+				return req
 			} catch (error: any) {
 				return error.response
 			}
@@ -73,6 +78,7 @@ export const useUserStore = defineStore("userStore", {
 			try {
 				const req = await Services.removeCartItem(id)
 				if (req.status === 200) this.cart = req.data.data
+				return req
 			} catch (error: any) {
 				return error.response
 			}

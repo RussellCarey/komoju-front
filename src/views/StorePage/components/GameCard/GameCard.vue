@@ -6,6 +6,15 @@
 		<p class="card-container-add" @click="addGameToCart">Add to cart?</p>
 
 		<div class="info-card">
+			<div class="info-card-consoles">
+				<p v-if="platforms.playstation">PS</p>
+				<p v-if="platforms.xbox">xbox</p>
+				<p v-if="platforms.pc">PC</p>
+				<p v-if="platforms.switch">switch</p>
+				<p v-if="platforms.ios">ios</p>
+				<p v-if="platforms.android">android</p>
+				<p v-if="platforms.linux">linux</p>
+			</div>
 			<p>{{ title }}</p>
 			<div class="info-card-bottom-section">
 				<p>{{ price }} tokens</p>
@@ -15,12 +24,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from "vue"
-import { addFavourite, addCartItem, getYoutubeVideo } from "./services/services"
+import { defineProps, ref, onMounted } from "vue"
+import { getYoutubeVideo } from "./services/services"
 import { useCookies } from "@vueuse/integrations/useCookies"
 import { FavouriteData } from "./interfaces/interfaces"
 import { useToast } from "vue-toastification"
-
+import { rawrPlatform } from "@/interfaces/rawr"
 import { useUserStore } from "../../../../stores/user"
 
 import VideoComponent from "./VideoFrame.vue"
@@ -30,13 +39,17 @@ const toast = useToast()
 
 const userStore = useUserStore()
 
-const props = defineProps({
-	id: Number,
-	image: String,
-	title: String,
-	price: Number,
-	rating: Number,
-})
+const videoID = ref<string | null>()
+const isHovering = ref<boolean>(false)
+
+const props = defineProps<{
+	id: number
+	image: string
+	title: string
+	price: number
+	rating: number
+	platforms: rawrPlatform[]
+}>()
 
 const gameData: FavouriteData = {
 	game_id: props.id!,
@@ -45,8 +58,15 @@ const gameData: FavouriteData = {
 	price: props.price!,
 }
 
-const videoID = ref<string | null>()
-const isHovering = ref<boolean>(false)
+const platforms = ref<any>({
+	xbox: false,
+	playstation: false,
+	ios: false,
+	linux: false,
+	switch: false,
+	android: false,
+	pc: false,
+})
 
 const getVideoData = async () => {
 	if (videoID.value) return
@@ -66,6 +86,20 @@ const addGameToCart = async () => {
 	console.log(userStore.get_cart)
 	toast.success("Added to cart.")
 }
+
+const checkPlatforms = () => {
+	props.platforms?.forEach((pl) => {
+		Object.keys(platforms.value).forEach((gpl) => {
+			if (pl.platform.name.toLowerCase().includes(gpl)) {
+				platforms.value[gpl] = true
+			}
+		})
+	})
+}
+
+onMounted(async () => {
+	checkPlatforms()
+})
 </script>
 
 <style lang="scss" scoped>

@@ -20,6 +20,16 @@ interface rawrResults {
 	metacritic: number
 	rating: number
 	image: string
+	platforms: rawrPlatform[]
+}
+
+export interface rawrPlatform {
+	platform: rawrPlatformData
+}
+
+interface rawrPlatformData {
+	id: string
+	name: string
 }
 
 interface rawHeader {
