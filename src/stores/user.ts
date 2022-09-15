@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { defineStore } from "pinia"
 import { User } from "@/interfaces/user"
+import * as Services from "./usersServices"
 
-//! Create a customer on KOMOJU and save payment info to it...
-//! WHen the user has this, we can pass the customer as cutomer: in the payment api..
-// https://docs.komoju.com/en/api/overview/#tokens
 export const useUserStore = defineStore("userStore", {
 	state: () => ({
 		auth_token: "" as string,
@@ -29,13 +29,53 @@ export const useUserStore = defineStore("userStore", {
 		set_details(details: User) {
 			this.details = details
 		},
-		set_cart(cart: any) {
-			this.cart = cart
+		async add_favourite(id: number, name: string, image: string, price: number) {
+			try {
+				const req = await Services.addFavourite(id, name, image, price)
+				if (req.status === 200) this.favourites = req.data.data
+			} catch (error: any) {
+				return error.response
+			}
 		},
-		set_favourites(favourites: any) {
-			this.favourites = favourites
+		async set_favourite() {
+			try {
+				const req = await Services.getCurrentFavourites()
+				if (req.status === 200) this.favourites = req.data.data
+			} catch (error: any) {
+				return error.response
+			}
+		},
+		async remove_favourite(id: number) {
+			try {
+				const req = await Services.removeFavourite(id)
+				if (req.status === 200) this.favourites = req.data.data
+			} catch (error: any) {
+				return error.response
+			}
+		},
+		async add_cart(id: number, name: string, image: string, price: number) {
+			try {
+				const req = await Services.addCartItem(id, name, image, price)
+				if (req.status === 200) this.cart = req.data.data
+			} catch (error: any) {
+				return error.response
+			}
+		},
+		async set_cart() {
+			try {
+				const req = await Services.getCurrentCart()
+				if (req.status === 200) this.cart = req.data.data
+			} catch (error: any) {
+				return error.response
+			}
+		},
+		async remove_cart(id: number) {
+			try {
+				const req = await Services.removeCartItem(id)
+				if (req.status === 200) this.cart = req.data.data
+			} catch (error: any) {
+				return error.response
+			}
 		},
 	},
 })
-
-// tokens: number, details: any, cart: any, favourites: any)

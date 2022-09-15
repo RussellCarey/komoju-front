@@ -1,11 +1,6 @@
 <template lang="">
-	<div
-		class="card-container"
-		:style="{ backgroundImage: 'url(' + image + ')' }"
-		@mouseover=";(isHovering = true), getVideoData()"
-		@mouseleave="isHovering = false"
-	>
-		<VideoComponent v-if="isHovering && videoID" :videoID="videoID" />
+	<div :class="'card-container'" :style="{ backgroundImage: 'url(' + image + ')' }" @mouseover="isHovering = true" @mouseleave="isHovering = false">
+		<!-- <VideoComponent v-if="isHovering && videoID" :videoID="videoID" /> -->
 
 		<div class="card-container-heart" @click="addGameToFavourites"></div>
 		<p class="card-container-add" @click="addGameToCart">Add to cart?</p>
@@ -26,10 +21,14 @@ import { useCookies } from "@vueuse/integrations/useCookies"
 import { FavouriteData } from "./interfaces/interfaces"
 import { useToast } from "vue-toastification"
 
+import { useUserStore } from "../../../../stores/user"
+
 import VideoComponent from "./VideoFrame.vue"
 
 const cookies = useCookies(["locale"])
 const toast = useToast()
+
+const userStore = useUserStore()
 
 const props = defineProps({
 	id: Number,
@@ -53,20 +52,18 @@ const getVideoData = async () => {
 	if (videoID.value) return
 
 	const req = await getYoutubeVideo(props.title + " trailer")
-	console.log(req)
 	videoID.value = req.data.items[0].id.videoId
 }
 
 const addGameToFavourites = async () => {
-	const req = await addFavourite(cookies.get("token"), gameData)
-	if (req.status !== 200) return toast.error("Could not add to favourites")
-
+	await userStore.add_favourite(gameData.game_id, gameData.name, gameData.image, gameData.price)
+	console.log(userStore.get_favourites)
 	toast.success("Added to favourites.")
 }
 
 const addGameToCart = async () => {
-	const req = await addCartItem(cookies.get("token"), gameData)
-	if (req.status !== 200) return toast.error("Could not add to cart")
+	await userStore.add_cart(gameData.game_id, gameData.name, gameData.image, gameData.price)
+	console.log(userStore.get_cart)
 	toast.success("Added to cart.")
 }
 </script>

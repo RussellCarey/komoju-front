@@ -6,13 +6,11 @@ export const useSearchStore = defineStore("searchStore", {
 		url: `https://rawg.io/api/games?key=${process.env.VUE_APP_RAWR_KEY}&page_size=40&page=1`,
 		genres: [] as number[],
 		platforms: [] as number[],
-		tags: [] as string[],
 		search: "" as string,
 	}),
 	getters: {
 		get_genres: (state) => state.genres,
 		get_platforms: (state) => state.platforms,
-		get_tags: (state) => state.tags,
 		get_url: (state) => state.url,
 		get_search: (state) => state.search,
 	},
@@ -38,14 +36,6 @@ export const useSearchStore = defineStore("searchStore", {
 		},
 		remove_platform(g: number) {
 			this.platforms = this.platforms.filter((item) => item !== g)
-			this.build_url()
-		},
-		add_tag(g: string) {
-			this.tags.push(g)
-			this.build_url()
-		},
-		remove_tag(g: string) {
-			this.tags = this.tags.filter((item) => item !== g)
 			this.build_url()
 		},
 		edit_search(g: string) {
