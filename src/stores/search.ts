@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-const rootURL = `https://rawg.io/api/games?key=${process.env.VUE_APP_RAWR_KEY}&page_size40&page=1`
+const rootURL = `https://rawg.io/api/games?key=${process.env.VUE_APP_RAWR_KEY}&page_size40`
 
 // Dont really need global for this?
 export const useSearchStore = defineStore("searchStore", {
@@ -16,14 +16,14 @@ export const useSearchStore = defineStore("searchStore", {
 		get_search: (state) => state.search,
 	},
 	actions: {
-		build_url(page = 1) {
-			if (this.search.length === 0) return (this.url = rootURL)
-
-			const root = `https://rawg.io/api/games?key=${process.env.VUE_APP_RAWR_KEY}&page_size=40&page=${page}&ordering=-metacritic`
+		build_url() {
+			const root = `https://rawg.io/api/games?key=${process.env.VUE_APP_RAWR_KEY}&page_size=40&ordering=-metacritic`
 			const genres = this.genres.length > 0 ? "&genres=" + this.genres.map((g) => `${g},`) : ""
 			const platforms = this.platforms.length > 0 ? "&platforms=" + this.platforms.map((g) => `${g},`) : ""
 			const search = this.search.length > 0 ? "&search=" + this.search : ""
+
 			this.url = root + genres + platforms + search
+			if (this.genres.length === 0 && this.platforms.length === 0 && this.search.length === 0) this.url = rootURL
 		},
 		add_genre(g: number) {
 			this.genres.push(g)
@@ -36,6 +36,7 @@ export const useSearchStore = defineStore("searchStore", {
 		add_platform(g: number) {
 			this.platforms.push(g)
 			this.build_url()
+			console.log(this.url)
 		},
 		remove_platform(g: number) {
 			this.platforms = this.platforms.filter((item) => item !== g)

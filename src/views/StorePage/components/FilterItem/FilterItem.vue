@@ -9,8 +9,8 @@
 import { defineProps, ref } from "vue"
 import { useSearchStore } from "../../../../stores/search"
 
-const store = useSearchStore()
-let isSelected = ref(false)
+const searchStore = useSearchStore()
+const isSelected = ref(false)
 
 const props = defineProps({
 	item: String,
@@ -20,13 +20,15 @@ const props = defineProps({
 
 const setSelected = () => {
 	if (props.type === "genre" && props.id) {
-		if (!isSelected.value) store.add_genre(props.id)
-		if (isSelected.value) store.remove_genre(props.id)
+		if (!isSelected.value) searchStore.add_genre(props.id)
+		if (isSelected.value) searchStore.remove_genre(props.id)
+		console.log(searchStore.url)
 	}
 
 	if (props.type === "platform" && props.id) {
-		if (!isSelected.value) store.add_platform(props.id)
-		if (isSelected.value) store.remove_platform(props.id)
+		if (!isSelected.value) searchStore.add_platform(props.id)
+		if (isSelected.value) searchStore.remove_platform(props.id)
+		console.log(searchStore.url)
 	}
 
 	isSelected.value = !isSelected.value

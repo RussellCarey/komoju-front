@@ -45,11 +45,10 @@ const onChange = (e: Event) => {
 	const target = e.target as HTMLInputElement
 	const id = target.id
 	userData.value = { ...userData.value, [id]: target.value }
-	console.log(userData)
 }
 
+//! Show errors from the DB too..
 const activateAccountAttempt = async () => {
-	console.log("CLICK")
 	const req = await submitSignup(userData.value)
 	if (req.status === 200) {
 		toast.success("Signed up successfully! Please wait.")
