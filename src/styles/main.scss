@@ -1,8 +1,10 @@
 :root {
-	--color-purple: #8070fa;
+	--color-main: rgb(65, 184, 131);
+	--color-light-main: rgb(206, 228, 218);
 	--color-white: #ffff;
 	--color-grey: #707070;
-	--color-bg: #0b0b0c;
+	--color-dark-bg: #0b0b0c;
+	--color-bg: rgb(32, 32, 32);
 }
 
 * {
@@ -12,7 +14,7 @@
 }
 
 #app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;

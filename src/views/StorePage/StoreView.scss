@@ -5,7 +5,7 @@
 	display: flex;
 	justify-content: center;
 
-	background-color: var(--color-bg);
+	background-color: var(--color-dark-bg);
 	color: var(--color-white);
 
 	overflow: hidden;
@@ -57,6 +57,11 @@
 				border: none;
 				padding: 10px 20px;
 				border-radius: 10px;
+			}
+
+			&-search:focus {
+				border: none;
+				outline: solid 2px var(--color-white);
 			}
 
 			p {

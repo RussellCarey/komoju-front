@@ -1,21 +1,65 @@
 <template lang="">
 	<div class="payment-container">
 		<div class="modal-container">
-			<p @click="$emit('closeModal')">CLOSE</p>
-			<input type="number" id="tokens" class="modal-input" placeholder="Amount of tokens" :value="paymentData.tokens" @input="(e) => onChange(e)" />
-			<div class="" v-if="!userStore.details.komoju_customer">
-				<input type="number" id="card" class="modal-input" placeholder="Card Number" :value="paymentData.card" @input="(e) => onChange(e)" />
-				<input type="text" id="month" class="modal-input" placeholder="Exp Month eg 04" :value="paymentData.month" @input="(e) => onChange(e)" />
-				<input type="text" id="year" class="modal-input" placeholder="Exp Year eg 2022" :value="paymentData.year" @input="(e) => onChange(e)" />
-				<input type="text" id="cvc" class="modal-input" placeholder="CVC" :value="paymentData.cvc" @input="(e) => onChange(e)" />
-				<input type="text" id="first" class="modal-input" placeholder="First Name" :value="paymentData.first" @input="(e) => onChange(e)" />
-				<input type="text" id="last" class="modal-input" placeholder="Last Name" :value="paymentData.last" @input="(e) => onChange(e)" />
-				<input type="text" id="notes" class="modal-input" placeholder="Notes" :value="paymentData.notes" @input="(e) => onChange(e)" />
+			<p class="modal-container-cross" @click="$emit('closeModal')">X</p>
+			<input
+				type="number"
+				id="tokens"
+				class="modal-container-input"
+				placeholder="Select amount of tokens for purchase"
+				:value="paymentData.tokens"
+				@input="(e) => onChange(e)"
+			/>
+			<p class="modal-container-notice" v-if="userStore.details.komoju_customer">You have payment details saved. Use the one click payment.</p>
+			<div class="modal-container-inputs" v-if="!userStore.details.komoju_customer">
+				<p class="modal-container-text">Card Number</p>
+				<input
+					type="number"
+					id="card"
+					class="modal-container-input"
+					placeholder="Card Number"
+					:value="paymentData.card"
+					@input="(e) => onChange(e)"
+				/>
+
+				<p class="modal-container-text">Exp Date</p>
+				<input
+					type="text"
+					id="month"
+					class="modal-container-input"
+					placeholder="Exp Month eg 04"
+					:value="paymentData.month"
+					@input="(e) => onChange(e)"
+				/>
+
+				<p class="modal-container-text">Exp year</p>
+				<input
+					type="text"
+					id="year"
+					class="modal-container-input"
+					placeholder="Exp Year eg 2022"
+					:value="paymentData.year"
+					@input="(e) => onChange(e)"
+				/>
+
+				<p class="modal-container-text">CVC</p>
+				<input type="text" id="cvc" class="modal-container-input" placeholder="CVC" :value="paymentData.cvc" @input="(e) => onChange(e)" />
+
+				<p class="modal-container-text">First Name</p>
+				<input type="text" id="first" class="modal-container-input" placeholder="First Name" :value="paymentData.first" @input="(e) => onChange(e)" />
+
+				<p class="modal-container-text">Last Name</p>
+				<input type="text" id="last" class="modal-container-input" placeholder="Last Name" :value="paymentData.last" @input="(e) => onChange(e)" />
+
+				<p class="modal-container-text">Notes</p>
+				<input type="text" id="notes" class="modal-container-input" placeholder="Notes" :value="paymentData.notes" @input="(e) => onChange(e)" />
 			</div>
 			<p v-if="!userStore.details.komoju_customer" @click="toggleSavePayment">
 				{{ !savePaymentData ? "Save payment data?" : "Dont save payment data?" }}
 			</p>
-			<button @click="attemptPayment">{{ userStore.details.komoju_customer ? "One click payment" : "Purchase" }}</button>
+			<button class="modal-container-submit" @click="attemptPayment">
+				{{ userStore.details.komoju_customer ? "One click payment" : "Purchase" }}
+			</button>
 		</div>
 	</div>
 </template>
@@ -36,7 +80,7 @@ const emit = defineEmits(["closeModal"])
 const savePaymentData = ref(false)
 
 const paymentData = ref<PaymentData>({
-	tokens: 1000,
+	tokens: null,
 	card: "4111111111111111",
 	month: "04",
 	year: "2024",

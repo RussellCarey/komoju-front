@@ -25,7 +25,6 @@
 <script setup lang="ts">
 import { defineProps, ref, onMounted, onUpdated, watch } from "vue"
 import { getYoutubeVideo } from "./services/services"
-import { useCookies } from "@vueuse/integrations/useCookies"
 import { FavouriteData } from "./interfaces/interfaces"
 import { useToast } from "vue-toastification"
 import { rawrPlatform } from "@/interfaces/rawr"
@@ -43,7 +42,6 @@ import windowSVG from "../../../../assets/svg/windowSVG.vue"
 import androidSVG from "../../../../assets/svg/androidSVG.vue"
 import cartSVG from "../../../../assets/svg/cartSVG.vue"
 
-const cookies = useCookies(["locale"])
 const toast = useToast()
 
 const userStore = useUserStore()
@@ -128,7 +126,7 @@ const checkPlatforms = () => {
 
 onMounted(async () => {
 	checkPlatforms()
-	getVideoData();
+	getVideoData()
 })
 
 onUpdated(() => {

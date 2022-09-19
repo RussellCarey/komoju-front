@@ -7,8 +7,7 @@
 				<p class="modal-container-items-item-price">{{ item.price }}</p>
 				<div class="modal-container-items-item-delete" v-if="!isFavourites" @click="(e) => removeItem(item.id, item.name)"></div>
 			</div>
-			<p v-if="items.length < 1">No items in</p>
-			<button v-if="!isFavourites">Purchase</button>
+			<p v-if="items.length < 1">Empty</p>
 		</div>
 	</div>
 </template>
@@ -16,20 +15,14 @@
 <script setup lang="ts">
 import { ref, onMounted, defineProps } from "vue"
 import { useToast } from "vue-toastification"
-import { useCookies } from "@vueuse/integrations/useCookies"
 import { useUserStore } from "@/stores/user"
 
-const cookies = useCookies(["locale"])
 const items = ref([])
 const toast = useToast()
 const userStore = useUserStore()
 
 const props = defineProps({
 	isFavourites: Boolean,
-	image: String,
-	name: String,
-	price: Number,
-	qty: Number,
 })
 
 const removeItem = async (id: number, name: string) => {

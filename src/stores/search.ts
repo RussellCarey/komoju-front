@@ -1,9 +1,10 @@
 import { defineStore } from "pinia"
+const rootURL = `https://rawg.io/api/games?key=${process.env.VUE_APP_RAWR_KEY}&page_size40&page=1`
 
 // Dont really need global for this?
 export const useSearchStore = defineStore("searchStore", {
 	state: () => ({
-		url: `https://rawg.io/api/games?key=${process.env.VUE_APP_RAWR_KEY}&page_size=40&page=1`,
+		url: rootURL,
 		genres: [] as number[],
 		platforms: [] as number[],
 		search: "" as string,
@@ -16,7 +17,9 @@ export const useSearchStore = defineStore("searchStore", {
 	},
 	actions: {
 		build_url(page = 1) {
-			const root = `https://rawg.io/api/games?key=${process.env.VUE_APP_RAWR_KEY}&page_size=20&page=${page}`
+			if (this.search.length === 0) return (this.url = rootURL)
+
+			const root = `https://rawg.io/api/games?key=${process.env.VUE_APP_RAWR_KEY}&page_size=40&page=${page}&ordering=-metacritic`
 			const genres = this.genres.length > 0 ? "&genres=" + this.genres.map((g) => `${g},`) : ""
 			const platforms = this.platforms.length > 0 ? "&platforms=" + this.platforms.map((g) => `${g},`) : ""
 			const search = this.search.length > 0 ? "&search=" + this.search : ""

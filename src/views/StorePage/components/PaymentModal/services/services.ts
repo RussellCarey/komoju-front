@@ -56,6 +56,8 @@ export const submitPaymentCard = async (amount: number, payment_details: string,
 }
 
 export const submitPaymentCustomer = async (amount: number, customer: string, token: string, savePayment: boolean) => {
+	console.log("TRYING TO BUY TOKENS")
+	console.log(amount)
 	try {
 		const req = await axios.request({
 			method: "POST",
