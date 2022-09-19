@@ -1,5 +1,5 @@
 .payment-container {
-	z-index: 10;
+	z-index: 600;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -21,7 +21,8 @@
 
 	height: 80%;
 
-	background-color: white;
+	background-color: rgb(32,32,32);
+	color: white;
 
 	display: flex;
 	flex-direction: column;

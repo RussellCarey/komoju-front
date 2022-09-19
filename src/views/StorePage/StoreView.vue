@@ -5,9 +5,15 @@
 		<div class="content">
 			<div class="content-header">
 				<h3 class="content-header-results">{{ gameData?.data?.count.toLocaleString() || 0 }} results</h3>
+				<input
+					type="text"
+					class="content-header-items-search"
+					:value="searchStore.get_search"
+					@input="(e) => setSearchValue(e)"
+					placeholder="Enter game name"
+				/>
+				
 				<div class="content-header-items">
-					<input type="text" class="content-header-items-search" :value="searchStore.get_search" @input="(e) => setSearchValue(e)" />
-
 					<div class="content-header-items-cart">
 						<p @click="toggleCartModal">Cart</p>
 						<Modal v-if="showCartModal" :isFavourites="false" />
@@ -90,6 +96,7 @@ const platformData = ref<rawrResponse | null>()
 const showPaymentModal = ref(false)
 const showCartModal = ref(false)
 const showFavouriteModal = ref(false)
+let searchTimeout = 0
 
 const setSearchValue = (e: Event) => {
 	const target = e.target as HTMLInputElement
@@ -114,11 +121,15 @@ onMounted(async () => {
 	platformData.value = await get_all_platforms()
 })
 
-// Set a time so its not so fast?
 watch(
 	() => searchStore.url,
 	async () => {
-		gameData.value = await get_games(searchStore.url)
+		// On change clear timeout so it doesnt happen so fast and make many calls on each letter.
+		clearTimeout(searchTimeout)
+
+		searchTimeout = setTimeout(async () => {
+			gameData.value = await get_games(searchStore.url)
+		}, 500)
 	}
 )
 </script>

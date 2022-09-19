@@ -12,8 +12,8 @@
 	height: max-content;
 	padding: 20px 20px;
 
-	background-color: white;
-	color: black;
+	background-color: rgb(32, 32, 32);
+	color: white;
 	border-radius: 5px;
 
 	&-items {
@@ -22,10 +22,15 @@
 		&-item {
 			width: 100%;
 			display: flex;
+			align-items: center;
+			padding: 10px 0;
 			justify-content: space-between;
 
+			&-item:not(:last-child) {
+				border-bottom: 1px rgb(107, 107, 107) solid;
+			}
+
 			&-image {
-				width: 40px;
 				height: 40px;
 			}
 
@@ -44,7 +49,7 @@
 				width: 14px;
 				height: 14px;
 
-				background-color: rgb(24, 23, 23);
+				background-color: white;
 				mask: url("../../../../assets/svg/trash-solid.svg") no-repeat center;
 			}
 		}
