@@ -12,7 +12,7 @@
 					@input="(e) => setSearchValue(e)"
 					placeholder="Enter game name"
 				/>
-				
+
 				<div class="content-header-items">
 					<div class="content-header-items-cart">
 						<p @click="toggleCartModal">Cart</p>
@@ -64,7 +64,7 @@
 						:rating="games.rating"
 						:title="games.name"
 						:image="games.background_image"
-						:price="Math.floor(games.rating * 1000)"
+						:price="Math.floor(games.rating * 1000 + 1000)"
 						:platforms="games.platforms"
 					/>
 				</div>
