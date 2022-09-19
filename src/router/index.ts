@@ -27,7 +27,6 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-	console.log("RUNNING ROUTER")
 	const userStore = useUserStore()
 	const cookies = useCookies(["locale"])
 
@@ -44,6 +43,9 @@ router.beforeEach(async (to, from, next) => {
 		userStore.set_auth_token(userData.data.token)
 		userStore.set_details(userData.data.user)
 		userStore.set_tokens(userData.data.user.token_count)
+
+		userStore.set_favourite()
+		userStore.set_cart()
 	}
 
 	next()

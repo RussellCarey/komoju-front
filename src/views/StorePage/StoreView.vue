@@ -110,7 +110,6 @@ const toggleFavouritesModal = () => {
 
 onMounted(async () => {
 	gameData.value = await get_games(searchStore.url)
-	console.log(gameData)
 	genreData.value = await get_all_categories()
 	platformData.value = await get_all_platforms()
 })

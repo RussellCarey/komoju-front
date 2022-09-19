@@ -1,30 +1,29 @@
 <template lang="">
 	<div :class="'card-container'" :style="{ backgroundImage: 'url(' + image + ')' }" @mouseover="isHovering = true" @mouseleave="isHovering = false">
-		<!-- <VideoComponent v-if="isHovering && videoID" :videoID="videoID" /> -->
-
-		<div class="card-container-heart" @click="addGameToFavourites"></div>
-		<p class="card-container-add" @click="addGameToCart">Add to cart?</p>
+		<VideoComponent v-if="isHovering && videoID" :videoID="videoID" />
+		<div :class="isFavourite ? 'card-container-heart card-container-hearted' : 'card-container-heart'" @click="toggleFavourite"></div>
+		<cartSVG class="card-container-add" @click="addGameToCart" />
 
 		<div class="info-card">
 			<div class="info-card-consoles">
-				<p v-if="platforms.playstation">PS</p>
-				<p v-if="platforms.xbox">xbox</p>
-				<p v-if="platforms.pc">PC</p>
-				<p v-if="platforms.switch">switch</p>
-				<p v-if="platforms.ios">ios</p>
-				<p v-if="platforms.android">android</p>
-				<p v-if="platforms.linux">linux</p>
+				<playstationSVG v-if="platforms.playstation" class="info-card-consoles-icon" />
+				<xboxSVG v-if="platforms.xbox" class="info-card-consoles-icon" />
+				<androidSVG v-if="platforms.android" class="info-card-consoles-icon" />
+				<appleSVG v-if="platforms.ios" class="info-card-consoles-icon" />
+				<linuxSVG v-if="platforms.linux" class="info-card-consoles-icon" />
+				<switchSVG v-if="platforms.switch" class="info-card-consoles-icon" />
+				<windowSVG v-if="platforms.pc" class="info-card-consoles-icon" />
 			</div>
-			<p>{{ title }}</p>
+			<p class="info-card-title">{{ title }}</p>
 			<div class="info-card-bottom-section">
-				<p>{{ price }} tokens</p>
+				<p class="info-card-price">{{ price }} tokens</p>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, onMounted } from "vue"
+import { defineProps, ref, onMounted, onUpdated, watch } from "vue"
 import { getYoutubeVideo } from "./services/services"
 import { useCookies } from "@vueuse/integrations/useCookies"
 import { FavouriteData } from "./interfaces/interfaces"
@@ -34,6 +33,16 @@ import { useUserStore } from "../../../../stores/user"
 
 import VideoComponent from "./VideoFrame.vue"
 
+// svg
+import playstationSVG from "../../../../assets/svg/playstationSVG.vue"
+import xboxSVG from "../../../../assets/svg/xboxSVG.vue"
+import linuxSVG from "../../../../assets/svg/linuxSVG.vue"
+import appleSVG from "../../../../assets/svg/appleSVG.vue"
+import switchSVG from "../../../../assets/svg/switchSVG.vue"
+import windowSVG from "../../../../assets/svg/windowSVG.vue"
+import androidSVG from "../../../../assets/svg/androidSVG.vue"
+import cartSVG from "../../../../assets/svg/cartSVG.vue"
+
 const cookies = useCookies(["locale"])
 const toast = useToast()
 
@@ -41,6 +50,8 @@ const userStore = useUserStore()
 
 const videoID = ref<string | null>()
 const isHovering = ref<boolean>(false)
+const isFavourite = ref<boolean>(false)
+const favouriteID = ref<number>(0)
 
 const props = defineProps<{
 	id: number
@@ -70,27 +81,45 @@ const platforms = ref<any>({
 
 const getVideoData = async () => {
 	if (videoID.value) return
-
 	const req = await getYoutubeVideo(props.title + " trailer")
+	console.log(req)
 	videoID.value = req.data.items[0].id.videoId
 }
 
-const addGameToFavourites = async () => {
-	await userStore.add_favourite(gameData.game_id, gameData.name, gameData.image, gameData.price)
-	console.log(userStore.get_favourites)
-	toast.success("Added to favourites.")
+const toggleFavourite = async () => {
+	if (!isFavourite.value) {
+		await userStore.add_favourite(gameData.game_id, gameData.name, gameData.image, gameData.price)
+		isFavourite.value = true
+		return toast.success("Added to favourites.")
+	}
+
+	if (isFavourite.value) {
+		await userStore.remove_favourite(favouriteID.value)
+		isFavourite.value = false
+		return toast.success(`Removed ${gameData.name}`)
+	}
 }
 
 const addGameToCart = async () => {
 	await userStore.add_cart(gameData.game_id, gameData.name, gameData.image, gameData.price)
-	console.log(userStore.get_cart)
+	// console.log(userStore.get_cart)
 	toast.success("Added to cart.")
+}
+
+const checkIsFavourites = () => {
+	const currentFavs = userStore.get_favourites
+	currentFavs.forEach((item) => {
+		if (+item.game_id === +gameData.game_id) {
+			favouriteID.value = +item.id
+			isFavourite.value = true
+		}
+	})
 }
 
 const checkPlatforms = () => {
 	props.platforms?.forEach((pl) => {
 		Object.keys(platforms.value).forEach((gpl) => {
-			if (pl.platform.name.toLowerCase().includes(gpl)) {
+			if (pl.platform.name.toLowerCase().includes(gpl.toLowerCase())) {
 				platforms.value[gpl] = true
 			}
 		})
@@ -99,6 +128,11 @@ const checkPlatforms = () => {
 
 onMounted(async () => {
 	checkPlatforms()
+	getVideoData();
+})
+
+onUpdated(() => {
+	checkIsFavourites()
 })
 </script>
 

@@ -9,8 +9,8 @@ export const useUserStore = defineStore("userStore", {
 		auth_token: "" as string,
 		tokens: 0 as number,
 		details: {} as User,
-		cart: {},
-		favourites: {},
+		cart: [],
+		favourites: [],
 	}),
 	getters: {
 		get_auth_token: (state) => state.auth_token,

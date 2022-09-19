@@ -5,7 +5,7 @@
 				<img :src="item.image" alt="" class="modal-container-items-item-image" />
 				<p class="modal-container-items-item-name">{{ item.name }}</p>
 				<p class="modal-container-items-item-price">{{ item.price }}</p>
-				<div class="modal-container-items-item-delete" @click="(e) => removeItem(item.id, item.name)"></div>
+				<div class="modal-container-items-item-delete" v-if="!isFavourites" @click="(e) => removeItem(item.id, item.name)"></div>
 			</div>
 			<p v-if="items.length < 1">No items in</p>
 			<button v-if="!isFavourites">Purchase</button>
@@ -17,11 +17,12 @@
 import { ref, onMounted, defineProps } from "vue"
 import { useToast } from "vue-toastification"
 import { useCookies } from "@vueuse/integrations/useCookies"
-import { getCurrentFavourites, removeFavourite, getCurrentCart, removeCartItem } from "./services/services"
+import { useUserStore } from "@/stores/user"
 
 const cookies = useCookies(["locale"])
 const items = ref([])
 const toast = useToast()
+const userStore = useUserStore()
 
 const props = defineProps({
 	isFavourites: Boolean,
@@ -32,18 +33,14 @@ const props = defineProps({
 })
 
 const removeItem = async (id: number, name: string) => {
-	const req = props.isFavourites ? await removeFavourite(cookies.get("token"), id) : await removeCartItem(cookies.get("token"), id)
-	if (req.status !== 200) return toast.error(`Error deleting ${props.isFavourites ? "favourite" : "cart"} items`)
-
-	items.value = req.data.data
+	const req = props.isFavourites ? await userStore.remove_favourite(id) : await userStore.remove_cart(id)
+	if (req.status !== 200) items.value = []
+	items.value = props.isFavourites ? userStore.favourites : userStore.cart
 	toast.success(`Removed ${name}`)
 }
 
 onMounted(async () => {
-	const req = props.isFavourites ? await getCurrentFavourites(cookies.get("token")) : await getCurrentCart(cookies.get("token"))
-	if (req.status !== 200) return toast.error(`Error getting ${props.isFavourites ? "favourite" : "cart"} items`)
-
-	items.value = req.data.data
+	items.value = props.isFavourites ? userStore.favourites : userStore.cart
 })
 </script>
 
