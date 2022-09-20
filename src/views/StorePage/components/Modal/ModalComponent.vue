@@ -30,7 +30,7 @@ const removeItem = async (id: number, name: string) => {
 	if (req.status !== 200) return (items.value = [])
 
 	items.value = props.isFavourites ? userStore.favourites : userStore.cart
-	toast.success(`Removed ${name}`)
+	toast.success(`Removed ${name} from cart.`)
 }
 
 onMounted(async () => {

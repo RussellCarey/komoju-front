@@ -79,20 +79,20 @@ const toggleFavourite = async () => {
 	if (!isFavourite.value) {
 		await userStore.add_favourite(gameData.game_id, gameData.name, gameData.image, gameData.price)
 		isFavourite.value = true
-		return toast.success("Added to favourites.")
+		return toast.success(`Added ${gameData.name} to favourites.`)
 	}
 
 	if (isFavourite.value) {
 		await userStore.remove_favourite(favouriteID.value)
 		isFavourite.value = false
-		return toast.success(`Removed ${gameData.name}`)
+		return toast.success(`Rempved ${gameData.name} from favourites.`)
 	}
 }
 
 const addGameToCart = async () => {
 	await userStore.add_cart(gameData.game_id, gameData.name, gameData.image, gameData.price)
 	// console.log(userStore.get_cart)
-	toast.success("Added to cart.")
+	toast.success(`Added ${gameData.name} to cart.`)
 }
 
 const checkIsFavourites = () => {
