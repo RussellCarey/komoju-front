@@ -1,7 +1,6 @@
 <template>
 	<div class="container">
 		<div class="container-login">
-			<h1 class="container-login-title">Welcome to Tokeny</h1>
 			<div class="container-login-container">
 				<p class="container-login-container-label">Email</p>
 				<input v-model="email" class="container-login-container-input" type="text" />
@@ -10,7 +9,12 @@
 				<p class="container-login-container-label">Password</p>
 				<input v-model="password" class="container-login-container-input" type="password" />
 			</div>
+			<div class="container-login-other">
+				<p class="container-login-link">Remeber for 30 days</p>
+				<p class="container-login-link">Forgot password?</p>
+			</div>
 			<button @click="login" class="container-login-button">Sign in</button>
+			<p class="container-login-container-text">Need an account? <span class="container-login-link" @click="router.push('/signup')">sign up</span></p>
 		</div>
 	</div>
 </template>
@@ -28,9 +32,9 @@ const router = useRouter()
 
 const cookies = useCookies(["locale"])
 const store = useUserStore()
-const email = ref("")
-const password = ref("")
-const token = ref("")
+const email = ref<string>("")
+const password = ref<string>("")
+const token = ref<string>("")
 
 const login = async () => {
 	const req = await signin(email.value, password.value)

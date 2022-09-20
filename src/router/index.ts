@@ -75,7 +75,6 @@ router.beforeEach(async (to, from, next) => {
 		if (!cookies.get("token")) next({ name: "signup" })
 
 		const req = await getSetUserData(next, userStore, cookies)
-		console.log(req.data.user.authorized_at)
 		if (!req.data.user.authorized_at) next({ name: "activate" })
 	}
 

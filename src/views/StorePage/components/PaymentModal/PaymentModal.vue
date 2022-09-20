@@ -54,9 +54,11 @@
 				<p class="modal-container-text">Notes</p>
 				<input type="text" id="notes" class="modal-container-input" placeholder="Notes" :value="paymentData.notes" @input="(e) => onChange(e)" />
 			</div>
-			<p v-if="!userStore.details.komoju_customer" @click="toggleSavePayment">
+
+			<button class="modal-container-submit" v-if="!userStore.details.komoju_customer" @click="toggleSavePayment">
 				{{ !savePaymentData ? "Save payment data?" : "Dont save payment data?" }}
-			</p>
+			</button>
+
 			<button class="modal-container-submit" @click="attemptPayment">
 				{{ userStore.details.komoju_customer ? "One click payment" : "Purchase" }}
 			</button>

@@ -1,7 +1,6 @@
 <template>
 	<div class="container">
 		<div class="signup">
-			<p class="signup-text">You must activate your account before using this service..</p>
 			<input id="email" class="signup-input" type="text" @change="onChange" placeholder="Email" :value="userData.email" />
 			<input id="username" class="signup-input" type="text" @change="onChange" placeholder="Username" :value="userData.username" />
 			<input id="first_name" class="signup-input" type="text" @change="onChange" placeholder="First Name" :value="userData.first_name" />
@@ -15,8 +14,7 @@
 				placeholder="Confirm Password"
 				:value="userData.password_confirm"
 			/>
-			<!-- <input id="email" class="signup-input" type="text" @change="onChange" /> -->
-			<button class="activate-button" @click="activateAccountAttempt">Submit</button>
+			<button class="signup-button" @click="activateAccountAttempt">Submit</button>
 		</div>
 	</div>
 </template>
@@ -49,15 +47,18 @@ const onChange = (e: Event) => {
 
 //! Show errors from the DB too..
 const activateAccountAttempt = async () => {
+	toast.success(`Attempting sign up. Please wait.`)
+
 	const req = await submitSignup(userData.value)
+
 	if (req.status === 200) {
 		toast.success("Signed up successfully! Please wait.")
 
 		setTimeout(() => {
-			return router.push("/activate")
+			return router.push("/")
 		}, 2000)
 	} else {
-		return toast.error(`Error. Incorrect token.`)
+		return toast.error(`We could not sign up!`)
 	}
 }
 </script>

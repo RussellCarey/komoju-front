@@ -27,7 +27,8 @@ const props = defineProps({
 
 const removeItem = async (id: number, name: string) => {
 	const req = props.isFavourites ? await userStore.remove_favourite(id) : await userStore.remove_cart(id)
-	if (req.status !== 200) items.value = []
+	if (req.status !== 200) return (items.value = [])
+
 	items.value = props.isFavourites ? userStore.favourites : userStore.cart
 	toast.success(`Removed ${name}`)
 }

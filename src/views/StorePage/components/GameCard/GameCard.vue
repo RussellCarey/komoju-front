@@ -1,6 +1,6 @@
 <template lang="">
 	<div :class="'card-container'" :style="{ backgroundImage: 'url(' + image + ')' }" @mouseover="isHovering = true" @mouseleave="isHovering = false">
-		<VideoComponent v-if="isHovering && videoID" :videoID="videoID" />
+		<!-- <VideoComponent v-if="isHovering && videoID" :videoID="videoID" /> -->
 		<div :class="isFavourite ? 'card-container-heart card-container-hearted' : 'card-container-heart'" @click="toggleFavourite"></div>
 		<cartSVG class="card-container-add" @click="addGameToCart" />
 

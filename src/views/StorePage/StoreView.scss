@@ -31,25 +31,21 @@
 
 		margin-bottom: 30px;
 
-		&-results {
-		}
-
 		&-items {
 			display: flex;
 			align-items: center;
 
-			&-cart {
-				position: relative;
-				cursor: pointer;
+			&-buttons {
+				&:hover {
+					position: relative;
+					cursor: pointer;
+					color: var(--color-main);
+					text-decoration: underline;
+				}
 			}
 
-			&-add-tokens {
-				cursor: pointer;
-			}
-
-			&-favourites {
-				position: relative;
-				cursor: pointer;
+			&-tokens {
+				color: var(--color-main);
 			}
 
 			&-search {

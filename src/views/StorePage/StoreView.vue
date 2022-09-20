@@ -14,19 +14,19 @@
 				/>
 
 				<div class="content-header-items">
-					<div class="content-header-items-cart">
+					<div class="content-header-items-buttons">
 						<p @click="toggleCartModal">Cart</p>
 						<Modal v-if="showCartModal" :isFavourites="false" />
 					</div>
 
-					<p class="content-header-items-add-tokens" @click="togglePaymentModal">Add tokens</p>
+					<p class="content-header-items-buttons" @click="togglePaymentModal">Add tokens</p>
 
-					<div class="content-header-items-favourites">
+					<div class="content-header-items-buttons">
 						<p @click="toggleFavouritesModal">Favourites</p>
 						<Modal v-if="showFavouriteModal" :isFavourites="true" />
 					</div>
 
-					<p>Tokens: {{ userStore.get_tokens }}</p>
+					<p class="content-header-items-tokens">Tokens: {{ userStore.get_tokens }}</p>
 				</div>
 			</div>
 			<div class="main">
