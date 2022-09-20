@@ -1,6 +1,6 @@
 <template lang="">
 	<div :class="'card-container'" :style="{ backgroundImage: 'url(' + image + ')' }" @mouseover="isHovering = true" @mouseleave="isHovering = false">
-		<!-- <VideoComponent v-if="isHovering && videoID" :videoID="videoID" /> -->
+		<VideoComponent v-if="isHovering" :title="gameData.name" />
 		<div :class="isFavourite ? 'card-container-heart card-container-hearted' : 'card-container-heart'" @click="toggleFavourite"></div>
 		<cartSVG class="card-container-add" @click="addGameToCart" />
 
@@ -24,7 +24,6 @@
 
 <script setup lang="ts">
 import { defineProps, ref, onMounted, onUpdated, watch } from "vue"
-import { getYoutubeVideo } from "./services/services"
 import { FavouriteData } from "./interfaces/interfaces"
 import { useToast } from "vue-toastification"
 import { rawrPlatform } from "@/interfaces/rawr"
@@ -46,7 +45,6 @@ const toast = useToast()
 
 const userStore = useUserStore()
 
-const videoID = ref<string | null>()
 const isHovering = ref<boolean>(false)
 const isFavourite = ref<boolean>(false)
 const favouriteID = ref<number>(0)
@@ -76,13 +74,6 @@ const platforms = ref<any>({
 	android: false,
 	pc: false,
 })
-
-const getVideoData = async () => {
-	if (videoID.value) return
-	const req = await getYoutubeVideo(props.title + " trailer")
-	console.log(req)
-	videoID.value = req.data.items[0].id.videoId
-}
 
 const toggleFavourite = async () => {
 	if (!isFavourite.value) {
@@ -126,7 +117,6 @@ const checkPlatforms = () => {
 
 onMounted(async () => {
 	checkPlatforms()
-	getVideoData()
 })
 
 onUpdated(() => {

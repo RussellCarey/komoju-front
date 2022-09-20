@@ -17,13 +17,28 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from "vue"
+import { defineProps, ref, onMounted } from "vue"
+import { getYoutubeVideo } from "./services/services"
 
+const videoURL = ref<string | null>()
 const props = defineProps({
-	videoID: String,
+	title: String,
 })
 
-const videoURL = ref<string | undefined>(`https://www.youtube.com/embed/${props.videoID}?autoplay=1&showinfo=0`)
+const getVideoData = async () => {
+	if (videoURL.value) return
+	const req = await getYoutubeVideo(props.title + " game trailer")
+
+	// Show a spinner or some loading animation for the video?
+	if (req.status !== 200) return
+
+	const videoID = req.data.items[0].id.videoId
+	videoURL.value = `https://www.youtube.com/embed/${videoID}?autoplay=1&showinfo=0`
+}
+
+onMounted(async () => {
+	getVideoData()
+})
 </script>
 
 <style lang="scss" scoped>
