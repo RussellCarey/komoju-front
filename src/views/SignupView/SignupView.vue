@@ -14,6 +14,17 @@
 				placeholder="Confirm Password"
 				:value="userData.password_confirm"
 			/>
+			<input
+				v-if="userData.prefered_contact"
+				id="mobile_number"
+				class="signup-input"
+				type="text"
+				@change="onChange"
+				placeholder="Mobile Number"
+				:value="userData.mobile_number"
+			/>
+			<input class="signup-check" type="checkbox" @click="userData.prefered_contact = +!userData.prefered_contact" />
+			<label class="signup-label" for="sns">Get SNS text alerts?</label>
 			<button class="signup-button" @click="activateAccountAttempt">Submit</button>
 		</div>
 	</div>
@@ -37,9 +48,11 @@ const userData = ref<UserSignup>({
 	first_name: "",
 	last_name: "",
 	prefered_contact: 0,
+	mobile_number: "",
 })
 
 const onChange = (e: Event) => {
+	console.log(userData)
 	const target = e.target as HTMLInputElement
 	const id = target.id
 	userData.value = { ...userData.value, [id]: target.value }

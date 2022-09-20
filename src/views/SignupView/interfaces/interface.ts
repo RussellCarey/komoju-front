@@ -6,4 +6,5 @@ export interface UserSignup {
 	first_name: string
 	last_name: string
 	prefered_contact: number
+	mobile_number: string
 }

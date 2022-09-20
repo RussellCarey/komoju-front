@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, onMounted, onUpdated, watch } from "vue"
+import { defineProps, ref, onMounted, onUpdated } from "vue"
 import { FavouriteData } from "./interfaces/interfaces"
 import { useToast } from "vue-toastification"
 import { rawrPlatform } from "@/interfaces/rawr"

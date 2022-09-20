@@ -1,5 +1,6 @@
 <template lang="">
 	<div class="trailer-video">
+		<p class="trailer-video-text" v-if="!videoURL">Loading video..</p>
 		<iframe
 			v-if="videoURL"
 			id="ytplayer"
