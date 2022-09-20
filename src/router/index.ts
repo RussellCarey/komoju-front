@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
+import { createRouter, createWebHistory, NavigationGuardNext, RouteRecordRaw } from "vue-router"
 
 import LoginView from "../views/LoginView/LoginView.vue"
 import StoreView from "../views/StorePage/StoreView.vue"
@@ -43,27 +43,44 @@ const router = createRouter({
 	routes,
 })
 
+const getSetUserData = async (next: NavigationGuardNext, userStore: any, cookies: any) => {
+	if (userStore.tokens && userStore.details) return
+
+	const userReq = await getUserDetails(cookies.get("token"))
+	if (userReq.status !== 200) return next({ name: "home" })
+
+	userStore.set_auth_token(userReq.data.token)
+	userStore.set_details(userReq.data.user)
+	userStore.set_tokens(userReq.data.user.token_count)
+	userStore.set_favourite()
+	userStore.set_cart()
+
+	return userReq
+}
+
 router.beforeEach(async (to, from, next) => {
 	const userStore = useUserStore()
 	const cookies = useCookies(["locale"])
 
-	if (to.path !== "/") {
-		// No token? Not logged in
-		if (!cookies.get("token")) return next({ name: "home" })
+	if (to.path === "/" && cookies.get("token")) {
+		return next({ name: "store" })
+	}
 
-		// IF we have data, we dont need it again!
-		if (userStore.tokens && userStore.details) next()
+	if (to.path === "/activate") {
+		if (!cookies.get("token")) next({ name: "signup" })
+		await getSetUserData(next, userStore, cookies)
+	}
 
-		const userReq = await getUserDetails(cookies.get("token"))
-		if (userReq.status !== 200) return next({ name: "home" })
+	if (to.path === "/store") {
+		if (!cookies.get("token")) next({ name: "signup" })
 
-		userStore.set_auth_token(userReq.data.token)
-		userStore.set_details(userReq.data.user)
-		userStore.set_tokens(userReq.data.user.token_count)
-		userStore.set_favourite()
-		userStore.set_cart()
-		console.log(userReq.data.user)
-		if (!userReq.data.user.authorized_at) return next({ name: "activate" })
+		const req = await getSetUserData(next, userStore, cookies)
+		console.log(req.data.user.authorized_at)
+		if (!req.data.user.authorized_at) next({ name: "activate" })
+	}
+
+	if (to.path === "/signup") {
+		if (cookies.get("token")) next({ name: "store" })
 	}
 
 	next()
