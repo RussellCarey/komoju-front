@@ -85,7 +85,7 @@ const toggleFavourite = async () => {
 	if (isFavourite.value) {
 		await userStore.remove_favourite(favouriteID.value)
 		isFavourite.value = false
-		return toast.success(`Rempved ${gameData.name} from favourites.`)
+		return toast.success(`Removed ${gameData.name} from favourites.`)
 	}
 }
 

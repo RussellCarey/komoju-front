@@ -9,6 +9,8 @@ import { useCookies } from "@vueuse/integrations/useCookies"
 import { useUserStore } from "@/stores/user"
 import { getUserDetails } from "./services/services"
 
+const cookies = useCookies(["locale"])
+
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: "/",
@@ -58,12 +60,24 @@ const getSetUserData = async (next: NavigationGuardNext, userStore: any, cookies
 	return userReq
 }
 
+// Check if the user is valid by attempting to get the user.
+const checkUserisValid = async () => {
+	if (!cookies.get("token")) return
+
+	const isValid = await getUserDetails(cookies.get("token"))
+	if (isValid.status !== 200) {
+		cookies.remove("token")
+		return false
+	}
+
+	return true
+}
+
 router.beforeEach(async (to, from, next) => {
 	const userStore = useUserStore()
-	const cookies = useCookies(["locale"])
 
-	if (to.path === "/" && cookies.get("token")) {
-		return next({ name: "store" })
+	if (to.path === "/") {
+		if (await checkUserisValid()) return next({ name: "store" })
 	}
 
 	if (to.path === "/activate") {
@@ -73,8 +87,9 @@ router.beforeEach(async (to, from, next) => {
 
 	if (to.path === "/store") {
 		if (!cookies.get("token")) next({ name: "signup" })
+		if (!(await checkUserisValid())) return next({ name: "home" })
 
-		await getSetUserData(next, userStore, cookies)
+		const userData = await getSetUserData(next, userStore, cookies)
 		if (!userStore.get_details.authorized_at) return next({ name: "activate" })
 	}
 

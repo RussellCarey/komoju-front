@@ -3,7 +3,7 @@
 		<PaymentModal v-if="showPaymentModal" @closeModal="togglePaymentModal" />
 
 		<div class="content">
-			<div class="content-header">
+			<nav class="content-header">
 				<h3 class="content-header-results">{{ gameData?.data?.count.toLocaleString() || 0 }} results</h3>
 				<input
 					type="text"
@@ -28,9 +28,9 @@
 
 					<p class="content-header-items-tokens">Tokens: {{ userStore.get_tokens }}</p>
 				</div>
-			</div>
+			</nav>
 			<div class="main">
-				<div class="main-sidebar">
+				<aside class="main-sidebar">
 					<div class="main-sidebar-filter-area">
 						<h4 class="main-sidebar-filter-area-title">Categories</h4>
 						<FilterItem
@@ -54,7 +54,7 @@
 							:type="'platform'"
 						/>
 					</div>
-				</div>
+				</aside>
 
 				<div class="main-sidebar-games">
 					<GameCard
