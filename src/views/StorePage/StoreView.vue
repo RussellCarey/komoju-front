@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<PaymentModal v-if="showPaymentModal" @closeModal="togglePaymentModal" />
-
+		<ChatComponent />
 		<div class="content">
 			<nav class="content-header">
 				<h3 class="content-header-results">{{ gameData?.data?.count.toLocaleString() || 0 }} results</h3>
@@ -80,12 +80,14 @@ import { useSearchStore } from "../../stores/search"
 import { useUserStore } from "../../stores/user"
 import { get_games, get_all_categories, get_all_platforms } from "./services/rawr"
 
+import ChatComponent from "../../components/ChatComponent/ChatComponent.vue"
 import FilterItem from "./components/FilterItem/FilterItem.vue"
 import GameCard from "./components/GameCard/GameCard.vue"
 import PaymentModal from "./components/PaymentModal/PaymentModal.vue"
 import Modal from "./components/Modal/ModalComponent.vue"
 
 import { rawrResponse } from "../../interfaces/rawr"
+
 const toast = useToast()
 
 const searchStore = useSearchStore()

@@ -60,7 +60,7 @@ const getSetUserData = async (next: NavigationGuardNext, userStore: any, cookies
 	return userReq
 }
 
-// Check if the user is valid by attempting to get the user.
+// Check if the user is valid by attempting to get the user. // REWORK THIS..
 const checkUserisValid = async () => {
 	if (!cookies.get("token")) return
 

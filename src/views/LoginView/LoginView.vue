@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
+import { onMounted, ref, inject } from "vue"
 import { useRouter } from "vue-router"
 import { useCookies } from "@vueuse/integrations/useCookies"
 import { signin } from "./services/db"
@@ -29,7 +29,6 @@ import { useToast } from "vue-toastification"
 
 const toast = useToast()
 const router = useRouter()
-
 const cookies = useCookies(["locale"])
 const store = useUserStore()
 const email = ref<string>("")
