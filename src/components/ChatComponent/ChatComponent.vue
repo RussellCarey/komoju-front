@@ -1,7 +1,9 @@
 <template>
-	<div class="chat-bubble" @click="toggleChatWindow">
-		<ChatWindow :history="chatHistory" />
-		<ChatLogo class="chat-bubble-icon" />
+	<div class="chat-bubble">
+		<div class="chat-bubble-unseen">{{ unseenMessages }}</div>
+		<div class="chat-bubble-click" @click="toggleChatWindow"></div>
+		<!-- <ChatLogo class="chat-bubble-icon" /> -->
+		<ChatWindow :history="chatHistory" v-if="isOpen" />
 	</div>
 </template>
 
@@ -16,7 +18,8 @@ export default {
 	setup() {
 		const isOpen = ref(false)
 		const chatHistory = ref<Array<IMessage>>([])
-		return { isOpen, chatHistory }
+		const unseenMessages = ref<number>(0)
+		return { isOpen, chatHistory, unseenMessages }
 	},
 	components: {
 		ChatWindow,
@@ -30,8 +33,10 @@ export default {
 				console.log("rejected")
 			},
 			received(data: IMessageResponse) {
-				console.log(data)
+				// @ts-ignore
 				this.chatHistory = [...this.chatHistory, ...data.messages]
+				// @ts-ignore
+				if (!this.isOpen) this.unseenMessages++
 			},
 			disconnected() {
 				console.log("disconnected")
@@ -40,20 +45,26 @@ export default {
 	},
 	methods: {
 		sendMessage: function () {
+			// @ts-ignore
 			this.$cable.perform({
 				channel: "MessagesChannel",
 				action: "send_message",
 				data: {
+					// @ts-ignore
 					content: this.message,
 				},
 			})
 		},
 		toggleChatWindow: function () {
 			console.log("CLICK")
+			// @ts-ignore
 			this.isOpen = !this.isOpen
+			// @ts-ignore
+			this.unseenMessages = 0
 		},
 	},
 	mounted() {
+		// @ts-ignore
 		this.$cable.subscribe({
 			channel: "MessagesChannel",
 			room: "public",
