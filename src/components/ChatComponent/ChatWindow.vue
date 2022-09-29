@@ -1,7 +1,7 @@
 <template lang="">
 	<div class="chat">
-		<div class="chat-window">
-			<div class="chat-window-message" v-for="data in history" :key="data.id" ref="windowRef" id="chickennugs">
+		<div class="chat-window" ref="windowRef">
+			<div class="chat-window-message" v-for="data in history" :key="data.id" id="chickennugs">
 				<p class="chat-window-message-time">{{ convertDateToTime(data.created_at) }}</p>
 				<p class="chat-window-message-username">{{ data.username }}:</p>
 				<p class="chat-window-message-text">{{ data.message }}</p>
@@ -45,13 +45,15 @@ const sendMessage = async () => {
 	const req = await sendChatMessage(inputMessage.value, cookies.get("token"))
 	console.log(req)
 	inputMessage.value = ""
-	if (windowRef.value) windowRef.value.scrollTop = windowRef.value.scrollHeight
+
+	// Not the best way, temporary..
+	setTimeout(() => {
+		if (windowRef.value) windowRef.value.scrollTop = windowRef.value.scrollHeight
+	}, 500)
 }
 
 onMounted(async () => {
-	if (windowRef.value) console.log(windowRef)
-	if (windowRef.value) console.log(windowRef.value)
-	if (windowRef.value) console.log(windowRef.value.id)
+	//
 })
 </script>
 

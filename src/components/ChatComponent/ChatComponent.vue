@@ -1,8 +1,7 @@
 <template>
 	<div class="chat-bubble">
 		<div class="chat-bubble-unseen">{{ unseenMessages }}</div>
-		<div class="chat-bubble-click" @click="toggleChatWindow"></div>
-		<!-- <ChatLogo class="chat-bubble-icon" /> -->
+		<ChatLogo class="chat-bubble-icon" @click="toggleChatWindow" />
 		<ChatWindow :history="chatHistory" v-if="isOpen" />
 	</div>
 </template>
@@ -11,7 +10,7 @@
 import { ref } from "vue"
 
 import { IMessageResponse, IMessage } from "./interfaces/messages"
-import ChatLogo from "../../assets/svg/chatLogo.vue"
+import ChatLogo from "../../assets/svg/chatIconSVG.vue"
 import ChatWindow from "./ChatWindow.vue"
 
 export default {
@@ -23,6 +22,7 @@ export default {
 	},
 	components: {
 		ChatWindow,
+		ChatLogo,
 	},
 	channels: {
 		MessagesChannel: {

@@ -1,6 +1,6 @@
 .chat-bubble {
 	z-index: 500;
-	background-color: rgb(241, 241, 241);
+	background-color: var(--color-main);
 	width: 50px;
 	height: 50px;
 
@@ -8,21 +8,31 @@
 	right: 20px;
 	bottom: 20px;
 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	border-radius: 50%;
 	cursor: pointer;
 
+	transition: all 0.1s ease-in;
+
+	&:hover {
+		transform: scale(102%);
+	}
+
 	&-unseen {
-		width: 25px;
-		height: 25px;
+		width: 24px;
+		height: 24px;
 
-		color: white;
+		color: var(--color-main);
 
-		background-color: var(--color-main);
+		background-color: var(--color-white);
 		border-radius: 50%;
 
 		position: absolute;
-		top: -5px;
-		right: -5px;
+		top: -10px;
+		right: -7px;
 
 		display: flex;
 		justify-content: center;
@@ -30,8 +40,9 @@
 	}
 
 	&-icon {
-		width: 35px;
-		height: 35px;
+		width: 30px;
+		height: 30px;
+		filter: invert(1);
 	}
 
 	&-click {
@@ -53,6 +64,8 @@
 	flex-direction: column;
 	background-color: white;
 	outline: solid 3px var(--color-main);
+
+	box-shadow: 0 20px 15px rgba(0, 0, 0, 0.6);
 
 	&-window {
 		width: 100%;
