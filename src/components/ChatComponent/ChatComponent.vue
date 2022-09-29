@@ -1,17 +1,25 @@
 <template>
-	<div class=""></div>
+	<div class="chat-bubble" @click="toggleChatWindow">
+		<ChatWindow :history="chatHistory" />
+		<ChatLogo class="chat-bubble-icon" />
+	</div>
 </template>
 
-<script>
-import mounted from "vue"
+<script lang="ts">
+import { ref } from "vue"
+
+import { IMessageResponse, IMessage } from "./interfaces/messages"
+import ChatLogo from "../../assets/svg/chatLogo.vue"
+import ChatWindow from "./ChatWindow.vue"
+
 export default {
-	setup(props) {
-		//
+	setup() {
+		const isOpen = ref(false)
+		const chatHistory = ref<Array<IMessage>>([])
+		return { isOpen, chatHistory }
 	},
-	data() {
-		return {
-			message: "Hello world",
-		}
+	components: {
+		ChatWindow,
 	},
 	channels: {
 		MessagesChannel: {
@@ -21,8 +29,9 @@ export default {
 			rejected() {
 				console.log("rejected")
 			},
-			received(data) {
+			received(data: IMessageResponse) {
 				console.log(data)
+				this.chatHistory = [...this.chatHistory, ...data.messages]
 			},
 			disconnected() {
 				console.log("disconnected")
@@ -39,6 +48,10 @@ export default {
 				},
 			})
 		},
+		toggleChatWindow: function () {
+			console.log("CLICK")
+			this.isOpen = !this.isOpen
+		},
 	},
 	mounted() {
 		this.$cable.subscribe({
@@ -50,5 +63,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* @import ""; */
+@import "./styles/styles.scss";
 </style>
