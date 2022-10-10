@@ -1,0 +1,35 @@
+:root {
+	--color-main: rgb(65, 184, 131);
+	--color-light-main: rgb(206, 228, 218);
+	--color-white: #ffff;
+	--color-grey: #707070;
+	--color-dark-bg: #0b0b0c;
+	--color-bg: rgb(32, 32, 32);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+#app {
+	font-family: Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
+}
+
+nav {
+	padding: 30px;
+
+	a {
+		font-weight: bold;
+		color: #2c3e50;
+
+		&.router-link-exact-active {
+			color: #42b983;
+		}
+	}
+}

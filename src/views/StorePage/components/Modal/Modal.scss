@@ -1,0 +1,61 @@
+// <div class="modal-container">
+// 	<div class="modal-container-items">
+// 		<div class="modal-container-items-item">
+
+.modal-container {
+	z-index: 500;
+	position: absolute;
+	top: 140%;
+	right: 0px;
+
+	width: 300px;
+	height: max-content;
+	padding: 20px 20px;
+
+	background-color: var(--color-bg);
+	color: var(--color-white);
+	border-radius: 5px;
+
+	&-items {
+		width: 100%;
+
+		&-item {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			padding: 10px 0;
+			justify-content: space-between;
+
+			&-item:not(:last-child) {
+				border-bottom: 1px rgb(107, 107, 107) solid;
+			}
+
+			&-image {
+				height: 40px;
+			}
+
+			&-name {
+				text-align: left;
+				width: 100px;
+				display: inline-block;
+				text-overflow: ellipsis;
+			}
+
+			&-price {
+				display: inline-block;
+			}
+
+			&-delete {
+				width: 14px;
+				height: 14px;
+
+				background-color: var(--color-white);
+				mask: url("../../../../assets/svg/trash-solid.svg") no-repeat center;
+			}
+		}
+
+		&-item:not(:last-child) {
+			margin-bottom: 10px;
+		}
+	}
+}
