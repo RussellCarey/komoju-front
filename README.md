@@ -1,34 +1,48 @@
-# test
+# Tokeny - Front
 
-## Project setup
-```
-npm install
-```
+An app to work with Vue for the first time and get to know it a little bit.  
+The front end for my Rails / Vue game purchasing mini project.  
+THe main focus of this project was the functionality over design.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+You can find the back end here: https://github.com/RussellCarey/komoju-back
 
-### Compiles and minifies for production
-```
-npm run build
-```
+![alt text](https://github.com/RussellCarey/komoju-front/raw/master/design/ss1.png)
 
-### Run your unit tests
-```
-npm run test:unit
-```
+## Table of contents
 
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
+- [Technologies](#technologies)
+- [Languages](#languages)
+- [Features](#features)
+- [Status](#status)
+- [Contact](#contact)
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Technologies, Modules and Tools
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Vue
+- Axios
+- KOMOJU Payments
+- More to come..
+
+## Languages
+
+- JavaScript / Typescript / Vue
+
+## Features
+
+Users can:
+
+- Search a variety of games.
+- Chat to other users in the global chat.
+- Favourite games that is saved using the backend.
+- Games cart that is saved to the back end.
+- Save their payment details for later use using KOMOJUs customers.
+- Buy tokens using KOMOJUs payment system.
+- Buy 'games' using said tokens.
+
+## Status
+
+Project is: In progress. Made for practice so may not be finished.
+
+## Contact
+
+Created by [@RussellCarey](https://twitter.com/russellcareyy) - feel free to contact me about the project
