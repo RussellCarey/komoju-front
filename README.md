@@ -8,6 +8,10 @@ You can find the back end here: https://github.com/RussellCarey/komoju-back
 
 ![alt text](https://github.com/RussellCarey/komoju-front/raw/master/design/ss1.png)
 
+Example of one e2e test with cypress; existing customer with one click payment buying tokens.
+
+https://user-images.githubusercontent.com/62222824/194958351-9894f615-c459-4bc6-99ee-28049e7923cc.mov
+
 ## Table of contents
 
 - [Technologies](#technologies)
