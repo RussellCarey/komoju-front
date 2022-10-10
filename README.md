@@ -49,4 +49,4 @@ Project is: In progress. Made for practice so may not be finished.
 
 ## Contact
 
-Created by [@RussellCarey](https://twitter.com/russellcareyy) - feel free to contact me about the project
+Created by [@RussellCarey](https://twitter.com/russellcareyy) - feel free to contact me about the project :)
