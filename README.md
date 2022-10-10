@@ -24,12 +24,13 @@ https://user-images.githubusercontent.com/62222824/194958351-9894f615-c459-4bc6-
 
 - Vue
 - Axios
-- KOMOJU Payments
-- More to come..
+- KOMOJU Payments API
+- Jest
+- Cypress
 
 ## Languages
 
-- JavaScript / Typescript / Vue
+- JavaScript / Typescript / Vue / Sass
 
 ## Features
 
@@ -42,6 +43,7 @@ Users can:
 - Save their payment details for later use using KOMOJUs customers.
 - Buy tokens using KOMOJUs payment system.
 - Buy 'games' using said tokens.
+- Chat to other users using the global chat room.
 
 ## Status
 
