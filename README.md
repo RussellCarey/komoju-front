@@ -7,7 +7,7 @@ THe main focus of this project was the functionality over design.
 You can find the back end here: https://github.com/RussellCarey/komoju-back
 
 ![alt text](https://github.com/RussellCarey/komoju-front/raw/master/design/ss2.png)
-<img src="https://github.com/RussellCarey/komoju-front/raw/master/design/g1.gif" alt="gif" width="100"/>
+<p><img src="https://github.com/RussellCarey/komoju-front/raw/master/design/g1.gif" width="100%"/></p>
 
 Example of one e2e test with cypress; existing customer with one click payment buying tokens.
 
