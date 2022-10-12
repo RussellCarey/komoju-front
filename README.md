@@ -48,7 +48,7 @@ Users can:
 
 ## Todo..  
 
-Improve Cypress testing and add unity testing.
+Improve Cypress testing and add unit testing.
 
 ## Status
 
