@@ -46,6 +46,10 @@ Users can:
 - Buy 'games' using said tokens.
 - Chat to other users using the global chat room.
 
+## Todo..  
+
+Improve Cypress testing and add unity testing.
+
 ## Status
 
 Project is: In progress. Made for practice so may not be finished.
