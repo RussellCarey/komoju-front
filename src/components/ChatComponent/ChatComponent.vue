@@ -43,7 +43,7 @@ const socketOptions: IOptions = {
 
 onMounted(async () => {
 	const cable = getCurrentInstance()?.appContext.config.globalProperties.$cable
-	new SocketConnection(cable, socketOptions)
+	const connection = new SocketConnection(cable, socketOptions)
 })
 </script>
 
