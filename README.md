@@ -2,7 +2,7 @@
 
 An app to work with Vue for the first time and get to know it a little bit.  
 The front end for my Rails / Vue game purchasing mini project.  
-THe main focus of this project was the functionality over design.
+The main focus of this project was the functionality over design.
 
 You can find the back end here: https://github.com/RussellCarey/komoju-back
 
